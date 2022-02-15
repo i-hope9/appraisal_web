@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default-layout}">
+<head>
+    <title>유형 관리</title>
+</head>
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">카테고리 관리</h1>
+        <p class="mb-4">카테고리를 관리할 수 있는 화면입니다.</p>
+
+        <!-- Category Table -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-2">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">카테고리</h6>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#categoryModal">추가</button>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <table class="table" data-toggle="table">
+                    <thead>
+                        <th>번호</th>
+                        <th>카테고리 이름</th>
+                        <th>설명</th>
+                        <th>사용 여부</th>
+                        <th>버튼</th>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${categories.empty}">
+                            <td colspan="6">카테고리가 없습니다.</td>
+                        </tr>
+                        <tr th:each="category : ${categories}">
+                            <td><span th:text="${category.id}"></span></td>
+                            <td><span th:text="${category.name}"></span></td>
+                            <td><span th:text="${category.description}"></span></td>
+                            <td><span th:text="${category.status}"></span></td>
+                            <td><span></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Category Item Table -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">카테고리 항목</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table data-togle="table"></table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Moal -->
+        <div th:replace="pages/admin/category/categoryModal"></div>
+    </div>
+    <!-- Category Javascript-->
+    <script th:src="@{/js/category.js}"></script>
+</th:block>
+</html>
