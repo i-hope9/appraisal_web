@@ -1,3 +1,3 @@
-function clickAddCategoryBtn() {
-
+function clickRow(txt) {
+    alert(txt);
 }
