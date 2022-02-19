@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default-layout}">
+<head>
+    <title>감정관리대장</title>
+</head>
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">감정관리대장</h1>
+        <p class="mb-4"></p>
+
+        <!-- Search Options -->
+        <div class="card border-top-success shadow mb-4">
+            <div class="card-body">
+                <form>
+                    <div class="form-row justify-content-between">
+                        <div class="form-group row col-md-3">
+                            <label for="year" class="col-sm-3 col-form-label font-weight-bold">연도</label>
+                            <div class="col-sm-9">
+                                <select id="year" class="form-control">
+                                    <option selected>Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-3">
+                            <label for="caseNumber" class="col-sm-3 col-form-label font-weight-bold">번호</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="caseNumber" placeholder="사건번호(K______)">
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-6">
+                            <label for="appraisalType" class="col-sm-2 col-form-label font-weight-bold">감정구분</label>
+                            <div class="col-sm-10">
+                                <select id="appraisalType" class="form-control">
+                                    <option selected>Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-between">
+                        <div class="form-group row col-md-5">
+                            <div class="col-sm-3 font-weight-bold">잔금 여부</div>
+                            <div class="col-sm-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="checkBalance">
+                                    <label class="form-check-label" for="checkBalance">
+                                        잔금 남은 감정만 조회
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline-success">
+                            <span class="text"><i class="fas fa-magnifying-glass mr-2"></i>검색</span>
+                        </button>
+                    </div>
+                    <div class="form-row justify-content-end">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Appraisal Table -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-2">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">감정 관리</h6>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#">추가</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="category-table" class="table" data-toggle="table">
+                    <thead>
+                    <th data-sortable="true">번호</th>
+                    <th data-sortable="true">카테고리 이름</th>
+                    <th>설명</th>
+                    <th>사용 여부</th>
+                    <th>버튼</th>
+                    </thead>
+                    <tbody>
+                    <!--                    <tr th:if="${categories.empty}">-->
+                    <!--                        <td class="text-center" colspan="6">카테고리가 없습니다.</td>-->
+                    <!--                        </tr>-->
+                    <!--                    <tr th:each="category : ${categories}" class="table-row-click" onclick="clickRow('TEST')">-->
+                    <!--                        <td><span th:text="${category.id}"></span></td>-->
+                    <!--                        <td><span th:text="${category.name}"></span></td>-->
+                    <!--                        <td><span th:text="${category.description}"></span></td>-->
+                    <!--                        <td><span th:text="${category.status}"></span></td>-->
+                    <!--                        <td><span></span></td>-->
+                    <!--                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Category Moal -->
+        <!--        <div th:replace="pages/admin/category/categoryModal"></div>-->
+    </div>
+    <!-- Category Javascript-->
+    <script th:src="@{/js/appraisal.js}"></script>
+</th:block>
+</html>
