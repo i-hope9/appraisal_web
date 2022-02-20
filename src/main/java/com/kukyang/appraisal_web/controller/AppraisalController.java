@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -12,9 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AppraisalController {
 
     @GetMapping
-    public String getCategories(Model model) {
+    public String getAppraisals(Model model) {
 
         return "pages/appraisal/appraisalMain";
+    }
+
+    @GetMapping("/{id}")
+    public String getAppraisalById(@PathVariable Long id) {
+
+        return "pages/appraisal/appraisalDetails";
     }
 
 }
