@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default-layout}">
+<head>
+    <title>감정관리대장</title>
+</head>
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">감정관리대장</h1>
+        <div class="d-flex align-items-center justify-content-between">
+            <p class="mb-4">감정번호: <span class="font-weight-bold">(2022) K20220222</span></p>
+            <button class="btn btn-primary">수정</button>
+        </div>
+
+        <!-- Overview table -->
+        <div class="card shadow mb-2">
+            <div class="card-header">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">사건 개요</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="overview-table" class="table table-sm" data-toggle="table">
+                    <thead>
+                    <th class="col-2">구분</th>
+                    <th>내용</th>
+                    <th>구분</th>
+                    <th>내용</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>수소법원</th>
+                        <td></td>
+                        <th>재판부</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td></td>
+                        <th>팩스번호</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>사건번호</th>
+                        <td></td>
+                        <th>감정번호</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>사건명</th>
+                        <td></td>
+                        <th>감정목적물</th>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Parties table -->
+        <div class="card shadow mb-2">
+            <div class="card-header">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">당사자</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="parties-table" class="table table-sm" data-toggle="table">
+                    <thead>
+                    <th class="col-2">구분</th>
+                    <th>이름</th>
+                    <th>연락처</th>
+                    <th>이름</th>
+                    <th>연락처</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>원고</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>원고 대리인</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>피고</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>피고 대리인</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Progress table -->
+        <div class="card shadow mb-2">
+            <div class="card-header py-2">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">감정진행상황</h6>
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryModal"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="progress-table" class="table table-sm" data-toggle="table">
+                    <thead>
+                    <th data-sortable="true">날짜</th>
+                    <th>구분</th>
+                    <th>비고</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- Fee table -->
+        <div class="card shadow mb-2">
+            <div class="card-header">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">감정료</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="fee-table" class="table table-sm" data-toggle="table">
+                    <thead>
+                    <th data-sortable="true">구분</th>
+                    <th>날짜</th>
+                    <th>예상감정료</th>
+                    <th>날짜</th>
+                    <th>추가감정료(1)</th>
+                    <th>날짜</th>
+                    <th>추가감정료(2)</th>
+                    <th>합계</th>
+                    <th>입금</th>
+                    <th>잔금</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>원고</th>
+                    </tr>
+                    <tr>
+                        <th>피고</th>
+                    </tr>
+                    <tr>
+                        <th>합계</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Fee deposits table -->
+        <div class="card shadow mb-2">
+            <div class="card-header py-2">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">감정료 입금 현황</h6>
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryModal"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="fee-deposits-table" class="table table-sm" data-toggle="table">
+                    <thead>
+                    <th data-sortable="true">당사자</th>
+                    <th data-sortable="true">날짜</th>
+                    <th>입금 금액</th>
+                    <th>기존 잔금</th>
+                    <th>잔금</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <!-- Appraisal Javascript-->
+    <script th:src="@{/js/appraisal.js}"></script>
+</th:block>
+</html>

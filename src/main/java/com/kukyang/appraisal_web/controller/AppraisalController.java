@@ -12,16 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AppraisalController {
 
-    @GetMapping
-    public String getAppraisals(Model model) {
+    @GetMapping("/list")
+    public String getAppraisalList(Model model) {
 
-        return "pages/appraisal/appraisalMain";
+        return "pages/appraisal/appraisalList";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public String getAppraisalById(@PathVariable Long id) {
 
-        return "pages/appraisal/appraisalDetails";
+        return "pages/appraisal/appraisalInfo";
+    }
+
+    @GetMapping("/info")
+    public String getAppraisalNew(Model model) {
+
+        return "pages/appraisal/appraisalNew";
     }
 
 }
