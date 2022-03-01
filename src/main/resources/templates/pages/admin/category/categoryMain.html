@@ -16,7 +16,9 @@
             <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">카테고리</h6>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#categoryModal">추가</button>
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryModal"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -31,7 +33,7 @@
                     <tbody>
                     <tr th:if="${categories.empty}">
                         <td class="text-center" colspan="6">카테고리가 없습니다.</td>
-                        </tr>
+                    </tr>
                     <tr th:each="category : ${categories}" class="table-row-click" onclick="clickRow('TEST')">
                         <td><span th:text="${category.id}"></span></td>
                         <td><span th:text="${category.name}"></span></td>
@@ -49,7 +51,9 @@
             <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">카테고리 항목</h6>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#categoryItemModal">추가</button>
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryItemModal"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
                 </div>
             </div>
             <div class="card-body">
