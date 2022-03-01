@@ -1,7 +1,7 @@
 <!-- Category Modal -->
 <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="categoryModalLabel">카테고리 추가</h5>
@@ -10,18 +10,27 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addCategoryForm" action="#" th:action="@{/admin/category}" th:object="${categoryDto}" method="post">
-                    <label for="name">이름</label>
-                    <input type="text" th:field="*{name}" id="name" placeholder="카테고리 이름">
-                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-                    <label for="description">설명</label>
-                    <input type="text" th:field="*{description}" id="description" placeholder="설명">
-                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-                </form>
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th><label for="categoryName">이름</label></th>
+                        <td><input id="categoryName" type="text" class="form-control" placeholder="카테고리 이름"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="categoryDescription">설명</label></th>
+                        <td><input id="categoryDescription" type="text" class="form-control" placeholder="설명"></td>
+                    </tr>
+                    <!--                        <tr>-->
+                    <!--                            <th><label for="categoryDescription"></label></th>-->
+                    <!--                            <td><input type="text" id="categoryDescription" placeholder="설명"></td>-->
+                    <!--                        </tr>-->
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                <input type="submit" form="addCategoryForm" class="btn btn-primary-" value="추가">
+                <button id="btnAddCategory" class="btn btn-primary" onclick="addCategory()"><i
+                        class="fas fa-floppy-disk mr-2"></i>저장
+                </button>
             </div>
         </div>
     </div>

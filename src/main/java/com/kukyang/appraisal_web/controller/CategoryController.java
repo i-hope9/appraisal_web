@@ -25,7 +25,6 @@ public class CategoryController {
                 .collect(Collectors.toList());
 
         model.addAttribute("categories", categoryDtoList);
-        model.addAttribute("categoryDto", new CategoryDto());
 
         return "pages/admin/category/categoryMain";
     }
@@ -33,10 +32,8 @@ public class CategoryController {
 
     @ResponseBody
     @PostMapping
-    public Long saveCategory(CategoryDto requestDto) {
-        System.out.println(requestDto.toString());
-        return 1L;
-//        return categoryService.saveCategory(requestDto).getId();
+    public Long saveCategory(@RequestBody CategoryDto requestDto) {
+        return categoryService.saveCategory(requestDto).getId();
     }
 
     @ResponseBody
