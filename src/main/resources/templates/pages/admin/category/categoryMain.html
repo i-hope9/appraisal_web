@@ -21,26 +21,18 @@
                     </button>
                 </div>
             </div>
-            <div class="card-body">
-                <table id="category-table" class="table" data-toggle="table">
+            <div id="categoryDiv" class="card-body">
+                <table id="categoryTable" class="table" data-toggle="table" data-url="/admin/category/list"
+                       data-single-select="true" data-click-to-select="true">
                     <thead>
-                    <th data-sortable="true">번호</th>
-                    <th data-sortable="true">카테고리 이름</th>
-                    <th>설명</th>
-                    <th>사용 여부</th>
-                    <th>버튼</th>
+                    <tr>
+                        <th data-field="id" data-sortable="true">번호</th>
+                        <th data-field="name" data-sortable="true">카테고리 이름</th>
+                        <th data-field="description">설명</th>
+                        <th data-field="status">사용 여부</th>
+                    </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${categories.empty}">
-                        <td class="text-center" colspan="6">카테고리가 없습니다.</td>
-                    </tr>
-                    <tr th:each="category : ${categories}" class="table-row-click" onclick="clickRow('TEST')">
-                        <td><span th:text="${category.id}"></span></td>
-                        <td><span th:text="${category.name}"></span></td>
-                        <td><span th:text="${category.description}"></span></td>
-                        <td><span th:text="${category.status}"></span></td>
-                        <td><span></span></td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -66,16 +58,16 @@
                     <th>버튼</th>
                     </thead>
                     <tbody>
-                    <tr th:if="${categories.empty}">
-                        <td class="text-center" colspan="6">카테고리가 없습니다.</td>
-                    </tr>
-                    <tr th:each="category : ${categories}" class="table-row-click" onclick="clickRow('TEST')">
-                        <td><span th:text="${category.id}"></span></td>
-                        <td><span th:text="${category.name}"></span></td>
-                        <td><span th:text="${category.description}"></span></td>
-                        <td><span th:text="${category.status}"></span></td>
-                        <td><span></span></td>
-                    </tr>
+                    <!--                    <tr th:if="${categories.empty}">-->
+                    <!--                        <td class="text-center" colspan="6">카테고리가 없습니다.</td>-->
+                    <!--                    </tr>-->
+                    <!--                    <tr th:each="category : ${categories}">-->
+                    <!--                        <td><span th:text="${category.id}"></span></td>-->
+                    <!--                        <td><span th:text="${category.name}"></span></td>-->
+                    <!--                        <td><span th:text="${category.description}"></span></td>-->
+                    <!--                        <td><span th:text="${category.status}"></span></td>-->
+                    <!--                        <td><span></span></td>-->
+                    <!--                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -83,6 +75,7 @@
 
         <!-- Category Moal -->
         <div th:replace="pages/admin/category/categoryModal"></div>
+        <div th:replace="pages/admin/category/categoryItemModal"></div>
     </div>
     <!-- Category Javascript-->
     <script th:src="@{/js/category.js}"></script>

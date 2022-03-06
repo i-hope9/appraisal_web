@@ -1,7 +1,3 @@
-function clickRow(txt) {
-    alert(txt);
-}
-
 function addCategory() {
     let data = {
         name: $('#categoryName').val(),
@@ -14,8 +10,22 @@ function addCategory() {
         type: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",
-        success: function (response) {
-            console.log(response);
+        success: function (fragment) {
+            $('#categoryModal').modal('hide');
+            $('#categoryTable').bootstrapTable('refresh');
         }
     })
 }
+
+function addCategoryItem() {
+
+
+    let data = {
+        name: $('#categoryItemName').val(),
+        description: $('#categoryItemDescription').val(),
+        status: 'ENABLE'
+    }
+
+}
+
+

@@ -1,0 +1,37 @@
+<!-- Category Modal -->
+<div class="modal fade" id="categoryItemModal" tabindex="-1" role="dialog" aria-labelledby="categoryItemModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryItemModalLabel">카테고리 항목 추가</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th><label for="categoryItemName">이름</label></th>
+                        <td><input id="categoryItemName" type="text" class="form-control" placeholder="카테고리 이름"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="categoryItemDescription">설명</label></th>
+                        <td><input id="categoryItemDescription" type="text" class="form-control" placeholder="설명"></td>
+                    </tr>
+                    <!--                        <tr>-->
+                    <!--                            <th><label for="categoryDescription"></label></th>-->
+                    <!--                            <td><input type="text" id="categoryDescription" placeholder="설명"></td>-->
+                    <!--                        </tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="btnAddCategory" class="btn btn-primary" onclick="addCategoryItem()"><i
+                        class="fas fa-floppy-disk mr-2"></i>저장
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

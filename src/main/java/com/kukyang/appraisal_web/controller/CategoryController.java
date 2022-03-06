@@ -18,22 +18,27 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public String getCategories(Model model) {
-        List<CategoryDto> categoryDtoList = categoryService.findAllCategories()
-                .stream()
-                .map(CategoryDto::fromEntity)
-                .collect(Collectors.toList());
-
-        model.addAttribute("categories", categoryDtoList);
+    public String getCategoryPage(Model model) {
 
         return "pages/admin/category/categoryMain";
     }
 
-
     @ResponseBody
+    @GetMapping("/list")
+    public List<CategoryDto> getCategories(Model model) {
+        return categoryService.findAllCategories()
+                .stream()
+                .map(CategoryDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+
     @PostMapping
-    public Long saveCategory(@RequestBody CategoryDto requestDto) {
-        return categoryService.saveCategory(requestDto).getId();
+    public String saveCategory(@RequestBody CategoryDto requestDto) {
+        // 카테고리 저장
+        categoryService.saveCategory(requestDto);
+
+        return "pages/admin/category/categoryMain :: #categoryDiv";
     }
 
     @ResponseBody
