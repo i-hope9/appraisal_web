@@ -22,15 +22,15 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="categoryTable" class="table table-sm table-row-click" data-toggle="table"
+                <table id="categoryTable" class="table table-sm table-row-click align-middle" data-toggle="table"
                        data-url="/admin/category/all"
                        data-single-select="true" data-click-to-select="true">
                     <thead>
                     <tr>
-                        <th data-field="id" data-sortable="true">고유 번호</th>
-                        <th data-field="name" data-sortable="true">카테고리 이름</th>
+                        <th class="col-1" data-field="id" data-sortable="true">고유 번호</th>
+                        <th class="col-3" data-field="name" data-sortable="true">카테고리 이름</th>
                         <th data-field="description">설명</th>
-                        <th data-field="status" data-formatter="statusFormatter">사용 여부</th>
+                        <th class="col-1 text-center" data-field="status" data-formatter="statusFormatter">사용 여부</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -50,12 +50,12 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="categoryItemTable" class="table table-sm" data-toggle="table">
+                <table id="categoryItemTable" class="table table-sm align-middle" data-toggle="table">
                     <thead>
-                    <th data-field="id" data-sortable="true">고유 번호</th>
-                    <th data-field="name" data-sortable="true" data-editable="true">항목 이름</th>
+                    <th class="col-1" data-field="id" data-sortable="true">고유 번호</th>
+                    <th class="col-3" data-field="name" data-sortable="true" data-editable="true">항목 이름</th>
                     <th data-field="description">설명</th>
-                    <th data-field="status">사용 여부</th>
+                    <th class="col-1 text-center" data-field="status">사용 여부</th>
                     </thead>
                     <tbody>
                     </tbody>
