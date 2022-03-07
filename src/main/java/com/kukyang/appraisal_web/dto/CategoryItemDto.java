@@ -2,17 +2,24 @@ package com.kukyang.appraisal_web.dto;
 
 import com.kukyang.appraisal_web.domain.model.Category;
 import com.kukyang.appraisal_web.domain.model.CategoryItem;
-import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import lombok.*;
+import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
-@Getter @Setter
+@SuperBuilder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryItemDto extends BaseTime {
+public class CategoryItemDto extends BaseTimeDto {
 
     private Long id;
+
+    private Long categoryId;
 
     private Category category;
 
@@ -25,12 +32,12 @@ public class CategoryItemDto extends BaseTime {
     public static CategoryItemDto fromEntity(CategoryItem categoryItem) {
         return CategoryItemDto.builder()
                 .id(categoryItem.getId())
-                .category(categoryItem.getCategory())
                 .name(categoryItem.getName())
                 .description(categoryItem.getDescription())
                 .status(categoryItem.getStatus())
+                .createdAt(categoryItem.getCreatedAt())
+                .modifiedAt(categoryItem.getModifiedAt())
                 .build();
     }
-
 
 }

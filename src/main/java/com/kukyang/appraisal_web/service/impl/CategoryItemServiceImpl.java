@@ -1,5 +1,6 @@
 package com.kukyang.appraisal_web.service.impl;
 
+import com.kukyang.appraisal_web.domain.model.Category;
 import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.CategoryItemRepository;
@@ -23,6 +24,9 @@ public class CategoryItemServiceImpl implements CategoryItemService {
      */
     @Override
     public CategoryItem saveCategoryItem(CategoryItemDto categoryItemDto) {
+        Category category = categoryService.findCategoryById(categoryItemDto.getCategoryId());
+        categoryItemDto.setCategory(category);
+
         return categoryItemRepository.save(CategoryItem.toEntity(categoryItemDto));
     }
 

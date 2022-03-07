@@ -4,9 +4,12 @@ import com.kukyang.appraisal_web.domain.model.Category;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Builder @ToString
-@Getter @Setter
+@SuperBuilder
+@ToString
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto extends BaseTimeDto {
@@ -21,6 +24,8 @@ public class CategoryDto extends BaseTimeDto {
                 .name(category.getName())
                 .description(category.getDescription())
                 .status(category.getStatus())
+                .createdAt(category.getCreatedAt())
+                .modifiedAt(category.getModifiedAt())
                 .build();
     }
 }

@@ -12,7 +12,7 @@
         <p class="mb-4">카테고리를 관리할 수 있는 화면입니다.</p>
 
         <!-- Category Table -->
-        <div class="card shadow mb-4">
+        <div id="categoryDiv" class="card shadow mb-4">
             <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">카테고리</h6>
@@ -21,15 +21,16 @@
                     </button>
                 </div>
             </div>
-            <div id="categoryDiv" class="card-body">
-                <table id="categoryTable" class="table" data-toggle="table" data-url="/admin/category/list"
+            <div class="card-body">
+                <table id="categoryTable" class="table table-sm table-row-click" data-toggle="table"
+                       data-url="/admin/category/all"
                        data-single-select="true" data-click-to-select="true">
                     <thead>
                     <tr>
-                        <th data-field="id" data-sortable="true">번호</th>
+                        <th data-field="id" data-sortable="true">고유 번호</th>
                         <th data-field="name" data-sortable="true">카테고리 이름</th>
                         <th data-field="description">설명</th>
-                        <th data-field="status">사용 여부</th>
+                        <th data-field="status" data-formatter="statusFormatter">사용 여부</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,35 +40,24 @@
         </div>
 
         <!-- Category Item Table -->
-        <div class="card shadow mb-4">
+        <div id="categoryItemDiv" class="card shadow mb-4 d-none">
             <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">카테고리 항목</h6>
+                    <h6 class="m-0 font-weight-bold text-primary"><span id="categoryNameForItem"></span> 항목</h6>
                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryItemModal"><i
                             class="fas fa-plus mr-1"></i>추가
                     </button>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table" data-toggle="table" data-click-to-select="true">
+                <table id="categoryItemTable" class="table table-sm" data-toggle="table">
                     <thead>
-                    <th data-sortable="true">번호</th>
-                    <th data-sortable="true">카테고리 이름</th>
-                    <th>설명</th>
-                    <th>사용 여부</th>
-                    <th>버튼</th>
+                    <th data-field="id" data-sortable="true">고유 번호</th>
+                    <th data-field="name" data-sortable="true" data-editable="true">항목 이름</th>
+                    <th data-field="description">설명</th>
+                    <th data-field="status">사용 여부</th>
                     </thead>
                     <tbody>
-                    <!--                    <tr th:if="${categories.empty}">-->
-                    <!--                        <td class="text-center" colspan="6">카테고리가 없습니다.</td>-->
-                    <!--                    </tr>-->
-                    <!--                    <tr th:each="category : ${categories}">-->
-                    <!--                        <td><span th:text="${category.id}"></span></td>-->
-                    <!--                        <td><span th:text="${category.name}"></span></td>-->
-                    <!--                        <td><span th:text="${category.description}"></span></td>-->
-                    <!--                        <td><span th:text="${category.status}"></span></td>-->
-                    <!--                        <td><span></span></td>-->
-                    <!--                    </tr>-->
                     </tbody>
                 </table>
             </div>
