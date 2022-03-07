@@ -8,6 +8,9 @@ spring:
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
+  sql:
+    init:
+      data-locations: classpath:data.sql
 
 ---
 spring:

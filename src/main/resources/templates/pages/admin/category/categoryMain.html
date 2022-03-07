@@ -50,12 +50,13 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="categoryItemTable" class="table table-sm align-middle" data-toggle="table">
+                <table id="categoryItemTable" class="table table-sm align-middle" data-toggle="table"
+                       data-pagination="true">
                     <thead>
                     <th class="col-1" data-field="id" data-sortable="true">고유 번호</th>
                     <th class="col-3" data-field="name" data-sortable="true" data-editable="true">항목 이름</th>
                     <th data-field="description">설명</th>
-                    <th class="col-1 text-center" data-field="status">사용 여부</th>
+                    <th class="col-1 text-center" data-field="status" data-formatter="statusFormatter">사용 여부</th>
                     </thead>
                     <tbody>
                     </tbody>
