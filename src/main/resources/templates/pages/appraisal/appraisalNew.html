@@ -38,8 +38,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label for="court" class="col-form-label">수소법원</label></th>
-                        <td><select id="court" class="form-control">
+                        <th><label for="courtCategory" class="col-form-label">수소법원</label></th>
+                        <td><select id="courtCategory" class="form-control">
                             <option selected>Choose...</option>
                             <option>...</option>
                         </select></td>
@@ -54,9 +54,10 @@
                     </tr>
                     <tr>
                         <th><label for="caseNumber" class="col-form-label">사건번호</label></th>
-                        <td><input id="caseNumber" class="form-control" type="number"></td>
-                        <th><label for="appraisalType" class="col-form-label">감정구분</label></th>
-                        <td><select id="appraisalType" class="form-control">
+                        <td><input id="caseType" class="form-control" type="text" placeholder="2022가합">
+                            <input id="caseNumber" class="form-control" type="number"></td>
+                        <th><label for="appraisalCategory" class="col-form-label">감정구분</label></th>
+                        <td><select id="appraisalCategory" class="form-control">
                             <option selected>Choose...</option>
                             <option>...</option>
                         </select></td>
@@ -66,6 +67,10 @@
                         <td><input id="name" class="form-control" type="text"></td>
                         <th><label for="objectAddress" class="col-form-label">감정목적물</label></th>
                         <td><input id="objectAddress" class="form-control" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="objectRemarks" class="col-form-label">감정목적물 비고</label></th>
+                        <td><input id="objectRemarks" class="form-control" type="text"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -118,33 +123,6 @@
             </div>
         </div>
 
-        <!-- Progress table -->
-        <!--
-        <div class="card shadow mb-2">
-            <div class="card-header">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">감정 진행 상황</h6>
-                </div>
-            </div>
-            <div class="card-body">
-                <table id="progress-table" class="table table-sm" data-toggle="table">
-                    <thead>
-                    <th data-sortable="true">날짜</th>
-                    <th>구분</th>
-                    <th>비고</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        -->
-
         <!-- Fee table -->
         <div class="card shadow mb-2">
             <div class="card-header">
@@ -190,18 +168,6 @@
                         <td><input id="defendantFeeTotal" type="number" class="form-control"></td>
                         <td><input id="defendantFeeDeposit" type="number" class="form-control"></td>
                         <td><input id="defendantFeeBalance" type="number" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <th>합계</th>
-                        <td></td>
-                        <td><input id="fee1Total" type="number" class="form-control"></td>
-                        <td></td>
-                        <td><input id="fee2Total" type="number" class="form-control"></td>
-                        <td></td>
-                        <td><input id="fee3Total" type="number" class="form-control"></td>
-                        <td></td>
-                        <td><input id="feeDepositTotal" type="number" class="form-control"></td>
-                        <td><input id="feeBalanceTotal" type="number" class="form-control"></td>
                     </tr>
                     </tbody>
                 </table>
