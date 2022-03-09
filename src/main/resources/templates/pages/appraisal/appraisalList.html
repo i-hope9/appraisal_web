@@ -75,28 +75,20 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="appraisal-table" class="table" data-toggle="table" data-pagination="true">
+                <table class="table table-sm table-row-click align-middle" data-pagination="true" data-toggle="table"
+                       data-url="/appraisal/all"
+                       id="appraisalTable">
                     <thead>
-                    <th data-sortable="true">감정 번호</th>
-                    <th data-sortable="true">수소 법원</th>
-                    <th>재판부</th>
-                    <th>사건 번호</th>
-                    <th>사건명</th>
-                    <th>감정 구분</th>
-                    <th>감정 목적물(주소)</th>
+                    <th class="col-1" data-field="appraisalNumber" data-sortable="true">감정 번호</th>
+                    <th data-field="courtCategory.name" data-sortable="true">수소 법원</th>
+                    <th data-field="judgePanel">재판부</th>
+                    <th data-field="caseNumber">사건 번호</th>
+                    <th data-field="name">사건명</th>
+                    <th data-field="appraisalCategory.name">감정 구분</th>
+                    <th data-field="objectAddress">감정 목적물(주소)</th>
                     <th>잔금</th>
                     </thead>
                     <tbody>
-                    <!--                    <tr th:if="${categories.empty}">-->
-                    <!--                        <td class="text-center" colspan="6">카테고리가 없습니다.</td>-->
-                    <!--                        </tr>-->
-                    <!--                    <tr th:each="category : ${categories}" class="table-row-click" onclick="clickRow('TEST')">-->
-                    <!--                        <td><span th:text="${category.id}"></span></td>-->
-                    <!--                        <td><span th:text="${category.name}"></span></td>-->
-                    <!--                        <td><span th:text="${category.description}"></span></td>-->
-                    <!--                        <td><span th:text="${category.status}"></span></td>-->
-                    <!--                        <td><span></span></td>-->
-                    <!--                    </tr>-->
                     </tbody>
                 </table>
             </div>

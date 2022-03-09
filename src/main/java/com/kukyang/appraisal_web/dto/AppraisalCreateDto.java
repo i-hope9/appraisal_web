@@ -1,58 +1,38 @@
 package com.kukyang.appraisal_web.dto;
 
+import com.kukyang.appraisal_web.domain.model.CategoryItem;
+import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @SuperBuilder
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppraisalCreateDto extends BaseTimeDto {
     private Long year;
     private String appraisalNumber;
-    private Long courtCategory;
+    private Long courtCategoryId;
     private String judgePanel;
     private Long judgeTel;
     private Long judgeFax;
     private String caseType;
     private Long caseNumber;
-    private Long appraisalCategory;
+    private Long appraisalCategoryId;
     private String name;
     private String objectAddress;
     private String objectRemarks;
+    private StatusEnum status;
 
-    private String plaintiffName;
-    private Long plaintiffTel;
-    private String plaintiffAttorneyCompanyName;
-    private Long plaintiffAttorneyCompanyTel;
-    private String plaintiffAttorneyName;
-    private Long plaintiffAttorneyTel;
+    private List<PartiesDto> partiesList;
+    private List<AppraisalFeeDto> appraisalFeeList;
 
-    private String defendantName;
-    private Long defendantTel;
-    private String defendantAttorneyCompanyName;
-    private Long defendantAttorneyCompanyTel;
-    private String defendantAttorneyName;
-    private Long defendantAttorneyTel;
+    private CategoryItem courtCategory;
+    private CategoryItem appraisalCategory;
 
-    private LocalDateTime plaintiffFee1Date;
-    private Long plaintiffFee1;
-    private LocalDateTime plaintiffFee2Date;
-    private Long plaintiffFee2;
-    private LocalDateTime plaintiffFee3Date;
-    private Long plaintiffFee3;
-
-    private LocalDateTime defendantFee1Date;
-    private Long defendantFee1;
-    private LocalDateTime defendantFee2Date;
-    private Long defendantFee2;
-    private LocalDateTime defendantFee3Date;
-    private Long defendantFee3;
 }

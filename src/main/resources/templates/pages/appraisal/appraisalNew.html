@@ -40,9 +40,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label for="courtCategory" class="col-form-label">수소법원</label></th>
+                        <th><label class="col-form-label" for="courtCategoryId">수소법원</label></th>
                         <td>
-                            <select id="courtCategory" class="form-control">
+                            <select class="form-control" id="courtCategoryId">
                                 <option selected disabled>-- 법원 선택 --</option>
                                 <option th:each="court : ${courts}" th:value="${court.id}"
                                         th:text="${court.name}"></option>
@@ -63,9 +63,9 @@
                                                        placeholder="e.g. 2022가합">
                             <input id="caseNumber" class="form-control w-50" type="number" placeholder="e.g. 999999">
                         </td>
-                        <th><label for="appraisalCategory" class="col-form-label">감정구분</label></th>
+                        <th><label class="col-form-label" for="appraisalCategoryId">감정구분</label></th>
                         <td>
-                            <select id="appraisalCategory" class="form-control">
+                            <select class="form-control" id="appraisalCategoryId">
                                 <option selected disabled>-- 감정구분 선택 --</option>
                                 <option th:each="appraisalCategory : ${appraisalCategories}"
                                         th:value="${appraisalCategory.id}"
@@ -103,7 +103,7 @@
             <div class="card-body">
                 <table id="partiesTable" class="table table-sm" data-toggle="table">
                     <thead>
-                    <th data-field="partiesCategory" class="d-none"></th>
+                    <th class="d-none" data-field="partiesCategoryId"></th>
                     <th class="col-2" data-field="partiesCategoryText">구분</th>
                     <th class="col-2" data-field="partiesName">이름</th>
                     <th class="col-3" data-field="partiesTel">연락처</th>
@@ -129,9 +129,9 @@
             <div class="card-body">
                 <table id="feeTable" class="table table-sm" data-toggle="table" data-show-footer="true">
                     <thead>
-                    <th data-field="feePartiesCategory" class="d-none"></th>
-                    <th data-field="feePartiesText" class="col-2" data-sortable="true">당사자</th>
-                    <th data-field="feeCategory" class="d-none"></th>
+                    <th class="d-none" data-field="feePartiesCategoryId"></th>
+                    <th class="col-2" data-field="feePartiesCategoryText" data-sortable="true">당사자</th>
+                    <th class="d-none" data-field="feeCategoryId"></th>
                     <th data-field="feeCategoryText" class="col-2" data-sortable="true">구분</th>
                     <th data-field="feeDate" class="col-4">날짜</th>
                     <th data-field="feeAmount" class="col-4">금액</th>
@@ -144,7 +144,7 @@
 
         <!-- Button -->
         <div class="mt-4 mb-5 d-flex align-items-center justify-content-end">
-            <button class="btn btn-primary"><i class="fas fa-floppy-disk mr-2"></i>저장</button>
+            <button class="btn btn-primary" onclick="addAppraisal()"><i class="fas fa-floppy-disk mr-2"></i>저장</button>
         </div>
 
         <!-- Parties Modal -->

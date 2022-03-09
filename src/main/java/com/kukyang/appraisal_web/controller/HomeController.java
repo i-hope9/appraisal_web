@@ -6,6 +6,6 @@ public class HomeController {
 
     @GetMapping
     public String homePage() {
-        return "redirect:appraisal/all";
+        return "redirect:/appraisal";
     }
 }

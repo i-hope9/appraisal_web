@@ -2,6 +2,7 @@ package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
+import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,11 +58,28 @@ public class Appraisal extends BaseTime {
 
     @OneToMany(mappedBy = "appraisal",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     private List<Parties> partiesList;
 
     @OneToMany(mappedBy = "appraisal",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     private List<AppraisalFee> appraisalFeeList;
+
+    public static Appraisal toEntity(AppraisalCreateDto dto) {
+        return Appraisal.builder()
+                .courtCategory(dto.getCourtCategory())
+                .appraisalCategory(dto.getAppraisalCategory())
+                .year(dto.getYear())
+                .appraisalNumber(dto.getAppraisalNumber())
+                .judgePanel(dto.getJudgePanel())
+                .judgeFax(dto.getJudgeFax())
+                .caseType(dto.getCaseType())
+                .caseNumber(dto.getCaseNumber())
+                .name(dto.getName())
+                .objectAddress(dto.getObjectAddress())
+                .objectRemarks(dto.getObjectRemarks())
+                .status(dto.getStatus())
+                .build();
+    }
 }
