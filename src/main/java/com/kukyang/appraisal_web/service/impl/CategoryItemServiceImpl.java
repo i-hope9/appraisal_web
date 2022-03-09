@@ -58,7 +58,7 @@ public class CategoryItemServiceImpl implements CategoryItemService {
         // 카테고리가 존재하는지 조회
         categoryService.findCategoryById(id);
 
-        return categoryItemRepository.findByCategoryIdAndStatus(id, StatusEnum.DELETED);
+        return categoryItemRepository.findByCategoryIdAndStatus(id, StatusEnum.ENABLE);
     }
 
     /**

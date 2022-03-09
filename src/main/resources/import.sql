@@ -1,4 +1,4 @@
--- 법원 유형
+-- 1. 법원 유형
 INSERT INTO category (name, description, status)
 VALUES ('법원', '감정 법원', 'ENABLE');
 
@@ -90,3 +90,51 @@ INSERT INTO category_item (name, description, category_id, status)
 VALUES ('군산지원', '', '1', 'ENABLE');
 INSERT INTO category_item (name, description, category_id, status)
 VALUES ('제주지방법원', '', '1', 'ENABLE');
+-- 2. 감정 유형
+INSERT INTO category (name, description, status)
+VALUES ('감정구분', '감정구분 유형', 'ENABLE');
+
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('공사비 기성고', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('공사비 추가공사', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('하자보수비 및 미시공', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('누수', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('인접지 피해', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('용역비 건축설계', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('용역비 정비사업', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('용역비 기타', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('건축측량 상태확인', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('유익비 원상회복', '', '2', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('기타', '', '2', 'ENABLE');
+
+-- 3. 당사자 유형
+INSERT INTO category (name, description, status)
+VALUES ('당사자', '당사자 유형', 'ENABLE');
+
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('원고', '', '3', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('피고', '', '3', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('원고 대리인', '', '3', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('피고 대리인', '', '3', 'ENABLE');
+
+-- 4. 감정료 유형
+INSERT INTO category (name, description, status)
+VALUES ('감정료', '감정료 유형', 'ENABLE');
+
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('예상감정료', '', '4', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status)
+VALUES ('추가감정료', '', '4', 'ENABLE');

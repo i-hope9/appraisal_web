@@ -1,0 +1,52 @@
+<!-- Category Modal -->
+<div class="modal fade" id="partiesModal" tabindex="-1" role="dialog" aria-labelledby="partiesModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="partiesModalLabel">당사자 추가</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mPartiesCategory">구분</label></th>
+                        <td>
+                            <select id="mPartiesCategory" class="form-control">
+                                <option selected disabled>-- 당사자 유형 선택 --</option>
+                                <option th:each="parties : ${partiesCategories}" th:value="${parties.id}"
+                                        th:text="${parties.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mPartiesName">이름</label></th>
+                        <td><input id="mPartiesName" type="text" class="form-control" placeholder="당사자 이름"></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mPartiesTel">전화번호</label></th>
+                        <td><input id="mPartiesTel" type="number" class="form-control" placeholder="숫자만 입력하세요."></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mAffiliation">소속기관 이름</label></th>
+                        <td><input id="mAffiliation" type="text" class="form-control" placeholder="e.g. 법무법인 한국"></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mAffiliationTel">소속기관 전화번호</label></th>
+                        <td><input id="mAffiliationTel" type="number" class="form-control" placeholder="숫자만 입력하세요.">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="btnAddParties" class="btn btn-primary" onclick="addParties()"><i
+                        class="fas fa-check mr-2"></i>확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<!-- Category Modal -->
+<div class="modal fade" id="feeModal" tabindex="-1" role="dialog" aria-labelledby="feeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feeModalLabel">당사자 추가</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mFeePartiesCategory">당사자</label></th>
+                        <td>
+                            <select id="mFeePartiesCategory" class="form-control">
+                                <option selected disabled>-- 당사자 유형 선택 --</option>
+                                <option th:each="parties : ${partiesCategories}" th:value="${parties.id}"
+                                        th:text="${parties.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mFeeCategory">구분</label></th>
+                        <td>
+                            <select id="mFeeCategory" class="form-control">
+                                <option selected disabled>-- 감정료 유형 선택 --</option>
+                                <option th:each="fee : ${feeCategories}" th:value="${fee.id}"
+                                        th:text="${fee.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mFeeDate">날짜</label></th>
+                        <td><input id="mFeeDate" type="date" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle"><label class="mb-0" for="mFeeAmount">금액</label></th>
+                        <td><input id="mFeeAmount" type="number" class="form-control" placeholder="숫자만 입력하세요."></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="btnAddParties" class="btn btn-primary" onclick="addFee()"><i
+                        class="fas fa-check mr-2"></i>확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

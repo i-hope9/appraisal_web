@@ -22,55 +22,68 @@
                 <table id="overview-table" class="table table-sm" data-toggle="table">
                     <thead>
                     <th class="col-2">구분</th>
-                    <th>내용</th>
-                    <th>구분</th>
-                    <th>내용</th>
+                    <th class="col-4">내용</th>
+                    <th class="col-2">구분</th>
+                    <th class="col-4">내용</th>
                     </thead>
                     <tbody>
                     <tr>
                         <th><label for="year" class="col-form-label">감정연도</label></th>
-                        <td><select id="year" class="form-control">
-                            <option selected>연도 선택</option>
-                            <option>...</option>
-                        </select></td>
+                        <td>
+                            <select id="year" class="form-control w-50">
+                                <option selected disabled>-- 연도 선택 --</option>
+                                <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+                            </select>
+                        </td>
                         <th><label for="appraisalNumber" class="col-form-label">감정번호</label></th>
-                        <td><input type="text" class="form-control" id="appraisalNumber" placeholder="감정번호(K______)">
+                        <td><input type="text" class="form-control" id="appraisalNumber" placeholder="e.g. K999999">
                         </td>
                     </tr>
                     <tr>
                         <th><label for="courtCategory" class="col-form-label">수소법원</label></th>
-                        <td><select id="courtCategory" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                        </select></td>
+                        <td>
+                            <select id="courtCategory" class="form-control">
+                                <option selected disabled>-- 법원 선택 --</option>
+                                <option th:each="court : ${courts}" th:value="${court.id}"
+                                        th:text="${court.name}"></option>
+                            </select>
+                        </td>
                         <th><label for="judgePanel" class="col-form-label">재판부</label></th>
-                        <td><input id="judgePanel" class="form-control" type="text"></td>
+                        <td><input id="judgePanel" class="form-control" type="text" placeholder="e.g. 민사5단독"></td>
                     </tr>
                     <tr>
                         <th><label for="judgeTel" class="col-form-label">전화번호</label></th>
-                        <td><input id="judgeTel" class="form-control" type="number"></td>
+                        <td><input id="judgeTel" class="form-control" type="number" placeholder="숫자만 입력하세요."></td>
                         <th><label for="judgeFax" class="col-form-label">팩스번호</label></th>
-                        <td><input id="judgeFax" class="form-control" type="number"></td>
+                        <td><input id="judgeFax" class="form-control" type="number" placeholder="숫자만 입력하세요."></td>
                     </tr>
                     <tr>
                         <th><label for="caseNumber" class="col-form-label">사건번호</label></th>
-                        <td><input id="caseType" class="form-control" type="text" placeholder="2022가합">
-                            <input id="caseNumber" class="form-control" type="number"></td>
+                        <td class="input-group"><input id="caseType" class="form-control w-50" type="text"
+                                                       placeholder="e.g. 2022가합">
+                            <input id="caseNumber" class="form-control w-50" type="number" placeholder="e.g. 999999">
+                        </td>
                         <th><label for="appraisalCategory" class="col-form-label">감정구분</label></th>
-                        <td><select id="appraisalCategory" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                        </select></td>
+                        <td>
+                            <select id="appraisalCategory" class="form-control">
+                                <option selected disabled>-- 감정구분 선택 --</option>
+                                <option th:each="appraisalCategory : ${appraisalCategories}"
+                                        th:value="${appraisalCategory.id}"
+                                        th:text="${appraisalCategory.name}"></option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <th><label for="name" class="col-form-label">사건명</label></th>
                         <td><input id="name" class="form-control" type="text"></td>
                         <th><label for="objectAddress" class="col-form-label">감정목적물</label></th>
-                        <td><input id="objectAddress" class="form-control" type="text"></td>
+                        <td><input id="objectAddress" class="form-control" type="text"
+                                   placeholder="e.g. 서울시 서초구 서초동 1591-3"></td>
                     </tr>
                     <tr>
                         <th><label for="objectRemarks" class="col-form-label">감정목적물 비고</label></th>
-                        <td><input id="objectRemarks" class="form-control" type="text"></td>
+                        <td colspan="3"><input id="objectRemarks" class="form-control" type="text"
+                                               placeholder="e.g. 아파트 B2/25층 1200세대"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -79,45 +92,25 @@
 
         <!-- Parties table -->
         <div class="card shadow mb-2">
-            <div class="card-header">
+            <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">당사자</h6>
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#partiesModal"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
                 </div>
             </div>
             <div class="card-body">
-                <table id="parties-table" class="table table-sm" data-toggle="table">
+                <table id="partiesTable" class="table table-sm" data-toggle="table">
                     <thead>
-                    <th class="col-2">구분</th>
-                    <th>이름</th>
-                    <th>연락처</th>
-                    <th>이름</th>
-                    <th>연락처</th>
+                    <th data-field="partiesCategory" class="d-none"></th>
+                    <th class="col-2" data-field="partiesCategoryText">구분</th>
+                    <th class="col-2" data-field="partiesName">이름</th>
+                    <th class="col-3" data-field="partiesTel">연락처</th>
+                    <th class="col-2" data-field="affiliation">소속 기관</th>
+                    <th class="col-3" data-field="affiliationTel">소속 기관 연락처</th>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th>원고</th>
-                        <td><input id="plaintiffName" type="text" class="form-control"></td>
-                        <td><input id="plaintiffTel" type="number" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <th>원고 대리인</th>
-                        <td><input id="plaintiffAttorneyCompanyName" type="text" class="form-control"></td>
-                        <td><input id="plaintiffAttorneyCompanyTel" type="number" class="form-control"></td>
-                        <td><input id="plaintiffAttorneyName" type="text" class="form-control"></td>
-                        <td><input id="plaintiffAttorneyTel" type="number" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <th>피고</th>
-                        <td><input id="defendantName" type="text" class="form-control"></td>
-                        <td><input id="defendantTel" type="number" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <th>피고 대리인</th>
-                        <td><input id="defendantAttorneyCompanyName" type="number" class="form-control"></td>
-                        <td><input id="defendantAttorneyCompanyTel" type="number" class="form-control"></td>
-                        <td><input id="defendantAttorneyName" type="number" class="form-control"></td>
-                        <td><input id="defendantAttorneyTel" type="number" class="form-control"></td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -125,83 +118,39 @@
 
         <!-- Fee table -->
         <div class="card shadow mb-2">
-            <div class="card-header">
+            <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">감정료</h6>
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#feeModal"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
                 </div>
             </div>
             <div class="card-body">
-                <table id="fee-table" class="table table-sm" data-toggle="table" data-show-footer="true">
+                <table id="feeTable" class="table table-sm" data-toggle="table" data-show-footer="true">
                     <thead>
-                    <th data-sortable="true">구분</th>
-                    <th>날짜</th>
-                    <th>예상감정료</th>
-                    <th>날짜</th>
-                    <th>추가감정료(1)</th>
-                    <th>날짜</th>
-                    <th>추가감정료(2)</th>
-                    <th>합계</th>
-                    <th>입금</th>
-                    <th>잔금</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>원고</th>
-                        <td><input id="plaintiffFee1Date" type="date" class="form-control"></td>
-                        <td><input id="plaintiffFee1" type="number" class="form-control"></td>
-                        <td><input id="plaintiffFee2Date" type="date" class="form-control"></td>
-                        <td><input id="plaintiffFee2" type="number" class="form-control"></td>
-                        <td><input id="plaintiffFee3Date" type="date" class="form-control"></td>
-                        <td><input id="plaintiffFee3" type="number" class="form-control"></td>
-                        <td><input id="plaintiffFeeTotal" type="number" class="form-control"></td>
-                        <td><input id="plaintiffFeeDeposit" type="number" class="form-control"></td>
-                        <td><input id="plaintiffFeeBalance" type="number" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <th>피고</th>
-                        <td><input id="defendantFee1Date" type="date" class="form-control"></td>
-                        <td><input id="defendantFee1" type="number" class="form-control"></td>
-                        <td><input id="defendantFee2Date" type="date" class="form-control"></td>
-                        <td><input id="defendantFee2" type="number" class="form-control"></td>
-                        <td><input id="defendantFee3Date" type="date" class="form-control"></td>
-                        <td><input id="defendantFee3" type="number" class="form-control"></td>
-                        <td><input id="defendantFeeTotal" type="number" class="form-control"></td>
-                        <td><input id="defendantFeeDeposit" type="number" class="form-control"></td>
-                        <td><input id="defendantFeeBalance" type="number" class="form-control"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Fee deposits table -->
-        <!--
-        <div class="card shadow mb-2">
-            <div class="card-header">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">감정료 입금 현황</h6>
-                </div>
-            </div>
-            <div class="card-body">
-                <table id="fee-deposits-table" class="table table-sm" data-toggle="table">
-                    <thead>
-                    <th data-sortable="true">당사자</th>
-                    <th data-sortable="true">날짜</th>
-                    <th>입금 금액</th>
-                    <th>기존 잔금</th>
-                    <th>잔금</th>
+                    <th data-field="feePartiesCategory" class="d-none"></th>
+                    <th data-field="feePartiesText" class="col-2" data-sortable="true">당사자</th>
+                    <th data-field="feeCategory" class="d-none"></th>
+                    <th data-field="feeCategoryText" class="col-2" data-sortable="true">구분</th>
+                    <th data-field="feeDate" class="col-4">날짜</th>
+                    <th data-field="feeAmount" class="col-4">금액</th>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
             </div>
         </div>
-        -->
 
         <!-- Button -->
         <div class="mt-4 mb-5 d-flex align-items-center justify-content-end">
             <button class="btn btn-primary"><i class="fas fa-floppy-disk mr-2"></i>저장</button>
         </div>
+
+        <!-- Parties Modal -->
+        <div th:replace="pages/appraisal/modalParties"></div>
+        <!-- Fee Modal -->
+        <div th:replace="pages/appraisal/modalFee"></div>
     </div>
     <!-- Appraisal Javascript-->
     <script th:src="@{/js/appraisal.js}"></script>
