@@ -7,6 +7,7 @@ import com.kukyang.appraisal_web.domain.repository.AppraisalRepository;
 import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
 import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.CategoryItemService;
+import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,14 @@ public class AppraisalServiceImpl implements AppraisalService {
     @Override
     public List<Appraisal> findAllAppraisals() {
         return appraisalRepository.findAllByStatusNot(StatusEnum.DELETED);
+    }
+
+    /**
+     * 감정 관리 조회: ID로 1개
+     */
+    @Override
+    public Appraisal findAppraisalById(Long id) {
+        return appraisalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("감정 관리를 찾을 수 없습니다. (ID: " + id + ")"));
     }
 }

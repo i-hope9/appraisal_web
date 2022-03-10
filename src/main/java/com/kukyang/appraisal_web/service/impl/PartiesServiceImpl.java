@@ -5,7 +5,7 @@ import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.Parties;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.PartiesRepository;
-import com.kukyang.appraisal_web.dto.PartiesDto;
+import com.kukyang.appraisal_web.dto.PartiesCreateDto;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.PartiesService;
 import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
@@ -25,7 +25,7 @@ public class PartiesServiceImpl implements PartiesService {
      * 당사자 저장
      */
     @Override
-    public Parties saveParties(PartiesDto partiesDto) {
+    public Parties saveParties(PartiesCreateDto partiesDto) {
         CategoryItem partiesCategory = categoryItemService.findCategoryItemById(partiesDto.getPartiesCategoryId());
         partiesDto.setPartiesCategory(partiesCategory);
 
@@ -36,9 +36,9 @@ public class PartiesServiceImpl implements PartiesService {
      * 당사자 저장: 목록으로 저장
      */
     @Override
-    public List<Parties> savePartiesList(List<PartiesDto> partiesDtoList, Appraisal appraisal) {
+    public List<Parties> savePartiesList(List<PartiesCreateDto> partiesDtoList, Appraisal appraisal) {
         List<Parties> results = new ArrayList<>();
-        for (PartiesDto partiesDto : partiesDtoList) {
+        for (PartiesCreateDto partiesDto : partiesDtoList) {
             partiesDto.setAppraisal(appraisal);
             partiesDto.setStatus(StatusEnum.ENABLE);
             results.add(this.saveParties(partiesDto));

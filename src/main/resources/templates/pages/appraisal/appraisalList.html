@@ -75,10 +75,12 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-sm table-row-click align-middle" data-pagination="true" data-toggle="table"
+                <table class="table table-sm table-row-click align-middle" data-click-to-select="true"
+                       data-pagination="true" data-toggle="table"
                        data-url="/appraisal/all"
-                       id="appraisalTable">
+                       id="appraisalListTable">
                     <thead>
+                    <th class="d-none" data-field="id">ID</th>
                     <th class="col-1" data-field="appraisalNumber" data-sortable="true">감정 번호</th>
                     <th data-field="courtCategory.name" data-sortable="true">수소 법원</th>
                     <th data-field="judgePanel">재판부</th>
@@ -96,6 +98,6 @@
 
     </div>
     <!-- Appraisal Javascript-->
-    <script th:src="@{/js/appraisal.js}"></script>
+    <script th:src="@{/js/appraisalList.js}"></script>
 </th:block>
 </html>

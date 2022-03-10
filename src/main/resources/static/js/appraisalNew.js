@@ -73,3 +73,7 @@ function addFee() {
     })
 }
 
+$(function () {
+    $('#overviewTable').bootstrapTable()
+})
+

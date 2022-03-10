@@ -29,8 +29,8 @@ public class AppraisalCreateDto extends BaseTimeDto {
     private String objectRemarks;
     private StatusEnum status;
 
-    private List<PartiesDto> partiesList;
-    private List<AppraisalFeeDto> appraisalFeeList;
+    private List<PartiesCreateDto> partiesList;
+    private List<AppraisalFeeCreateDto> appraisalFeeList;
 
     private CategoryItem courtCategory;
     private CategoryItem appraisalCategory;

@@ -6,6 +6,9 @@ import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @SuperBuilder
 @Getter
 @Setter
@@ -28,7 +31,13 @@ public class AppraisalDto extends BaseTimeDto {
     private String objectRemarks;
     private StatusEnum status;
 
+    private List<PartiesDto> partiesList;
+    private List<AppraisalFeeDto> appraisalFeeList;
+
     public static AppraisalDto fromEntity(Appraisal appraisal) {
+        List<PartiesDto> partiesList = appraisal.getPartiesList().stream().map(PartiesDto::fromEntity).collect(Collectors.toList());
+        List<AppraisalFeeDto> appraisalFeeList = appraisal.getAppraisalFeeList().stream().map(AppraisalFeeDto::fromEntity).collect(Collectors.toList());
+
         return AppraisalDto.builder()
                 .id(appraisal.getId())
                 .year(appraisal.getYear())
@@ -43,6 +52,8 @@ public class AppraisalDto extends BaseTimeDto {
                 .objectAddress(appraisal.getObjectAddress())
                 .objectRemarks(appraisal.getObjectRemarks())
                 .status(appraisal.getStatus())
+                .partiesList(partiesList)
+                .appraisalFeeList(appraisalFeeList)
                 .createdAt(appraisal.getCreatedAt())
                 .modifiedAt(appraisal.getModifiedAt())
                 .build();

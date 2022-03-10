@@ -15,4 +15,7 @@ public interface AppraisalService {
     /* Read */
     @Transactional
     List<Appraisal> findAllAppraisals();
+
+    @Transactional
+    Appraisal findAppraisalById(Long id);
 }

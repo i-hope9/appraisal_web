@@ -9,6 +9,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">감정관리대장</h1>
+        <p class="mb-4">감정관리 상세 정보입니다. </p>
         <div class="d-flex align-items-center justify-content-end">
             <button class="btn btn-primary">수정</button>
         </div>
@@ -21,43 +22,48 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="overview-table" class="table table-sm" data-toggle="table">
+                <table class="table table-sm" data-toggle="table" id="overviewTable">
                     <thead>
                     <th class="col-2">구분</th>
-                    <th>내용</th>
-                    <th>구분</th>
-                    <th>내용</th>
+                    <th class="col-4">내용</th>
+                    <th class="col-2">구분</th>
+                    <th class="col-4">내용</th>
                     </thead>
                     <tbody>
                     <tr>
-                        <th>연도</th>
-                        <td></td>
-                        <th>감정번호</th>
-                        <td></td>
+                        <th>감정연도</th>
+                        <td th:text="${appraisal.year}"></td>
+                        <th data-editable="true">감정번호</th>
+                        <td th:text="${appraisal.appraisalNumber}"></td>
                     </tr>
                     <tr>
                         <th>수소법원</th>
-                        <td></td>
+                        <td th:text="${appraisal.courtCategory.name}"></td>
                         <th>재판부</th>
-                        <td></td>
+                        <td th:text="${appraisal.judgePanel}"></td>
                     </tr>
                     <tr>
                         <th>전화번호</th>
-                        <td></td>
+                        <td th:text="${appraisal.judgeTel}"></td>
                         <th>팩스번호</th>
-                        <td></td>
+                        <td th:text="${appraisal.judgeFax}"></td>
                     </tr>
                     <tr>
                         <th>사건번호</th>
-                        <td></td>
+                        <td><span th:text="${appraisal.caseType}"></span>
+                            <span th:text="${appraisal.caseNumber}"></span></td>
                         <th>감정번호</th>
-                        <td></td>
+                        <td th:text="${appraisal.appraisalCategory.name}"></td>
                     </tr>
                     <tr>
                         <th>사건명</th>
-                        <td></td>
+                        <td th:text="${appraisal.name}"></td>
                         <th>감정목적물</th>
-                        <td></td>
+                        <td th:text="${appraisal.objectAddress}"></td>
+                    </tr>
+                    <tr>
+                        <th>감정목적물 비고</th>
+                        <td colspan="3" th:text="${appraisal.objectRemarks}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -72,42 +78,21 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="parties-table" class="table table-sm" data-toggle="table">
+                <table class="table table-sm" data-toggle="table" id="partiesTable">
                     <thead>
                     <th class="col-2">구분</th>
-                    <th>이름</th>
-                    <th>연락처</th>
-                    <th>이름</th>
-                    <th>연락처</th>
+                    <th class="col-2">이름</th>
+                    <th class="col-3">연락처</th>
+                    <th class="col-2">소속 기관</th>
+                    <th class="col-3">소속 기관 연락처</th>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th>원고</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>원고 대리인</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>피고</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>피고 대리인</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr th:each="parties:${appraisal.partiesList}">
+                        <td th:text="${parties.partiesCategory.name}"></td>
+                        <td th:text="${parties.name}"></td>
+                        <td th:text="${parties.tel}"></td>
+                        <td th:text="${parties.affiliation}"></td>
+                        <td th:text="${parties.affiliationTel}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -125,7 +110,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="progress-table" class="table table-sm" data-toggle="table">
+                <table class="table table-sm" data-toggle="table" id="progressTable">
                     <thead>
                     <th data-sortable="true">날짜</th>
                     <th>구분</th>
@@ -151,28 +136,19 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="fee-table" class="table table-sm" data-toggle="table">
+                <table class="table table-sm" data-toggle="table" id="feeTable">
                     <thead>
-                    <th data-sortable="true">구분</th>
-                    <th>날짜</th>
-                    <th>예상감정료</th>
-                    <th>날짜</th>
-                    <th>추가감정료(1)</th>
-                    <th>날짜</th>
-                    <th>추가감정료(2)</th>
-                    <th>합계</th>
-                    <th>입금</th>
-                    <th>잔금</th>
+                    <th class="col-2" data-sortable="true">당사자</th>
+                    <th class="col-2" data-sortable="true">구분</th>
+                    <th class="col-4">날짜</th>
+                    <th class="col-4">금액</th>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th>원고</th>
-                    </tr>
-                    <tr>
-                        <th>피고</th>
-                    </tr>
-                    <tr>
-                        <th>합계</th>
+                    <tr th:each="fee:${appraisal.appraisalFeeList}">
+                        <td th:text="${fee.parties.partiesCategory.name}"></td>
+                        <td th:text="${fee.feeCategory.name}"></td>
+                        <td th:text="${fee.depositDate}"></td>
+                        <td th:text="${fee.amount}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -190,7 +166,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="fee-deposits-table" class="table table-sm" data-toggle="table">
+                <table class="table table-sm" data-toggle="table" id="feeDepositsTable">
                     <thead>
                     <th data-sortable="true">당사자</th>
                     <th data-sortable="true">날짜</th>
@@ -206,6 +182,6 @@
 
     </div>
     <!-- Appraisal Javascript-->
-    <script th:src="@{/js/appraisal.js}"></script>
+    <script th:src="@{/js/appraisalNew.js}"></script>
 </th:block>
 </html>

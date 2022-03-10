@@ -2,7 +2,7 @@ package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import com.kukyang.appraisal_web.dto.AppraisalFeeDto;
+import com.kukyang.appraisal_web.dto.AppraisalFeeCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,7 +41,7 @@ public class AppraisalFee extends BaseTime {
 
     private StatusEnum status;
 
-    public static AppraisalFee toEntity(AppraisalFeeDto appraisalFeeDto) {
+    public static AppraisalFee toEntity(AppraisalFeeCreateDto appraisalFeeDto) {
         return AppraisalFee.builder()
                 .appraisal(appraisalFeeDto.getAppraisal())
                 .parties(appraisalFeeDto.getParties())

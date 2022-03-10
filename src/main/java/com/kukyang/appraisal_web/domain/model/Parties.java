@@ -1,7 +1,7 @@
 package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
-import com.kukyang.appraisal_web.dto.PartiesDto;
+import com.kukyang.appraisal_web.dto.PartiesCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,7 +41,7 @@ public class Parties extends BaseTime {
             fetch = FetchType.LAZY)
     private List<AppraisalFee> appraisalFeeList;
 
-    public static Parties toEntity(PartiesDto partiesDto) {
+    public static Parties toEntity(PartiesCreateDto partiesDto) {
         return Parties.builder()
                 .appraisal(partiesDto.getAppraisal())
                 .partiesCategory(partiesDto.getPartiesCategory())

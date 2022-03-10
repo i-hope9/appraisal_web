@@ -6,7 +6,7 @@ import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.Parties;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.AppraisalFeeRepository;
-import com.kukyang.appraisal_web.dto.AppraisalFeeDto;
+import com.kukyang.appraisal_web.dto.AppraisalFeeCreateDto;
 import com.kukyang.appraisal_web.service.AppraisalFeeService;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.PartiesService;
@@ -27,7 +27,7 @@ public class AppraisalFeeServiceImpl implements AppraisalFeeService {
      * 감정료 저장
      */
     @Override
-    public AppraisalFee saveAppraisalFee(AppraisalFeeDto appraisalFeeDto) {
+    public AppraisalFee saveAppraisalFee(AppraisalFeeCreateDto appraisalFeeDto) {
         CategoryItem feeCategory = categoryItemService.findCategoryItemById(appraisalFeeDto.getFeeCategoryId());
         Parties parties = partiesService.findByAppraisalAndPartiesCategory(appraisalFeeDto.getAppraisal().getId(), appraisalFeeDto.getFeePartiesCategoryId());
         appraisalFeeDto.setFeeCategory(feeCategory);
@@ -40,9 +40,9 @@ public class AppraisalFeeServiceImpl implements AppraisalFeeService {
      * 감정료 저장: 목록으로 저장
      */
     @Override
-    public List<AppraisalFee> saveAppraisalFeeList(List<AppraisalFeeDto> appraisalFeeDtoList, Appraisal appraisal) {
+    public List<AppraisalFee> saveAppraisalFeeList(List<AppraisalFeeCreateDto> appraisalFeeDtoList, Appraisal appraisal) {
         List<AppraisalFee> results = new ArrayList<>();
-        for (AppraisalFeeDto appraisalFeeDto : appraisalFeeDtoList) {
+        for (AppraisalFeeCreateDto appraisalFeeDto : appraisalFeeDtoList) {
             appraisalFeeDto.setAppraisal(appraisal);
             appraisalFeeDto.setStatus(StatusEnum.ENABLE);
             results.add(this.saveAppraisalFee(appraisalFeeDto));

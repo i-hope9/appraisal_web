@@ -41,7 +41,9 @@ public class AppraisalController {
     }
 
     @GetMapping("/info/{id}")
-    public String getAppraisalById(@PathVariable Long id) {
+    public String getAppraisalById(@PathVariable Long id, Model model) {
+        AppraisalDto appraisalDto = AppraisalDto.fromEntity(appraisalService.findAppraisalById(id));
+        model.addAttribute("appraisal", appraisalDto);
 
         return "pages/appraisal/appraisalInfo";
     }
