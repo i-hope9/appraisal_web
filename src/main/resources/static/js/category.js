@@ -1,5 +1,52 @@
-let $categoryTable = $('#categoryTable');
-let $categoryItemTable = $('#categoryItemTable');
+let $categoryTable = new Tabulator('#categoryTable', {
+    ajaxURL: "/admin/category/all",
+    placeholder: "등록된 카테고리가 없습니다.",
+    layout: "fitColumns",
+    columns: [
+        {title: "고유 번호", field: "id", sorter: "number", width: 100},
+        {title: "카테고리 이름", field: "name", sorter: "string"},
+        {title: "설명", field: "description", widthGrow: 4},
+        {
+            title: "사용 여부",
+            field: "status",
+            hozAlign: "center",
+            width: 100,
+            formatter: function (cell, formatterParams, onRendered) {
+                let value = cell.getValue();
+                let icon = value === 'ENABLE' ? 'fa-circle-check' : 'fa-circle-minus';
+                let color = value === 'ENABLE' ? 'text-success' : 'text-secondary';
+                return '<i class="fa ' + icon + ' ' + color + '"></i>';
+            }
+        }
+    ]
+});
+
+let $categoryItemTable = new Tabulator('#categoryItemTable', {
+    placeholder: "등록된 카테고리 항목이 없습니다.",
+    layout: "fitColumns",
+    pagination: "local",
+    paginationSize: 10,
+    columns: [
+        {title: "고유 번호", field: "id", sorter: "number", width: 100},
+        {title: "항목 이름", field: "name", sorter: "string"},
+        {title: "설명", field: "description", widthGrow: 4},
+        {
+            title: "사용 여부",
+            field: "status",
+            hozAlign: "center",
+            width: 100,
+            formatter: function (cell, formatterParams, onRendered) {
+                let value = cell.getValue();
+                let icon = value === 'ENABLE' ? 'fa-circle-check' : 'fa-circle-minus';
+                let color = value === 'ENABLE' ? 'text-success' : 'text-secondary';
+                return '<i class="fa ' + icon + ' ' + color + '"></i>';
+            }
+        }
+    ]
+});
+
+let $categoryModal = $('#categoryModal');
+let $categoryItemModal = $('#categoryItemModal');
 
 function addCategory() {
     let data = {
@@ -14,8 +61,11 @@ function addCategory() {
         data: JSON.stringify(data),
         contentType: "application/json",
         success: function () {
-            $('#categoryModal').modal('hide');
-            $('#categoryTable').bootstrapTable('refresh');
+            $categoryModal.modal('hide');
+            $categoryModal.children().find('input, select').each(function () {
+                $(this).is('input') ? $(this).val('') : this.selectedIndex = 0;
+            })
+            $categoryTable.setData();
         }
     })
 }
@@ -35,44 +85,21 @@ function addCategoryItem() {
         data: JSON.stringify(data),
         contentType: "application/json",
         success: function () {
-            $('#categoryItemModal').modal('hide');
-            let categoryItems = getCategoryItems(categoryId);
-            $categoryItemTable.bootstrapTable('load', categoryItems);
+            $categoryItemModal.modal('hide');
+            $categoryItemModal.children().find('input, select').each(function () {
+                $(this).is('input') ? $(this).val('') : this.selectedIndex = 0;
+            })
+            let url = "/admin/category/" + categoryId + "/items";
+            $categoryItemTable.setData(url);
         }
     })
 }
 
-function getCategoryItems(categoryId) {
-    let items;
-    $.ajax({
-        url: "/admin/category/" + categoryId + "/items",
-        type: "GET",
-        contentType: "application/json",
-        async: false,
-        success: function (fragment) {
-            items = fragment;
-        },
-        error: function (e) {
-            alert("잠시 후 재시도하십시오.");
-        }
-    })
-    console.log(items);
-    return items;
-}
-
-function statusFormatter(value) {
-    let icon = value === 'ENABLE' ? 'fa-circle-check' : 'fa-circle-minus';
-    let color = value === 'ENABLE' ? 'text-success' : 'text-secondary';
-    let text = value === 'ENABLE' ? '사용' : '미사용';
-    return '<i class="fa ' + icon + ' ' + color + '"></i>';
-}
-
-$categoryTable.bootstrapTable({
-    onClickRow: function (row, $element, field) {
-        $('#categoryNameForItem').text(row.name);
-        $('#categoryIdForItem').val(row.id);
-        let items = getCategoryItems(row.id);
-        $categoryItemTable.bootstrapTable('load', items);
-        $('#categoryItemDiv').removeClass('d-none').show();
-    }
-})
+$categoryTable.on("rowClick", function (e, row) {
+    let data = row.getData();
+    $('#categoryNameForItem').text(data.name);
+    $('#categoryIdForItem').val(data.id);
+    let url = "/admin/category/" + data.id + "/items";
+    $categoryItemTable.setData(url);
+    $('#categoryItemDiv').removeClass('d-none').show();
+});
