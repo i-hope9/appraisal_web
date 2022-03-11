@@ -1,7 +1,6 @@
 package com.kukyang.appraisal_web.dto;
 
-import com.kukyang.appraisal_web.domain.model.Appraisal;
-import com.kukyang.appraisal_web.domain.model.CategoryItem;
+import com.kukyang.appraisal_web.domain.model.Parties;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
 import lombok.AllArgsConstructor;
@@ -16,14 +15,24 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PartiesDto extends BaseTimeDto {
-    private Long partiesCategoryId;
-    private String partiesName;
-    private Long partiesTel;
+    private Long id;
+    private CategoryItemDto partiesCategory;
+    private String name;
+    private Long tel;
     private String affiliation;
     private Long affiliationTel;
     private StatusEnum status;
 
-    private CategoryItem partiesCategory;
-    private Appraisal appraisal;
-
+    public static PartiesDto fromEntity(Parties parties) {
+        return PartiesDto.builder()
+                .id(parties.getId())
+                .partiesCategory(CategoryItemDto.fromEntity(parties.getPartiesCategory()))
+                .name(parties.getName())
+                .tel(parties.getTel())
+                .affiliation(parties.getAffiliation())
+                .affiliationTel(parties.getAffiliationTel())
+                .createdAt(parties.getCreatedAt())
+                .modifiedAt(parties.getModifiedAt())
+                .build();
+    }
 }

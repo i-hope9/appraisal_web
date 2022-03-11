@@ -1,8 +1,6 @@
 package com.kukyang.appraisal_web.dto;
 
-import com.kukyang.appraisal_web.domain.model.Appraisal;
-import com.kukyang.appraisal_web.domain.model.CategoryItem;
-import com.kukyang.appraisal_web.domain.model.Parties;
+import com.kukyang.appraisal_web.domain.model.AppraisalFee;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
 import lombok.AllArgsConstructor;
@@ -10,9 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @SuperBuilder
 @Getter
@@ -20,15 +17,25 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppraisalFeeDto extends BaseTimeDto {
-    private Long feePartiesCategoryId;
-    private Long feeCategoryId;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate feeDate;
-    private Long feeAmount;
+    private Long id;
+    private CategoryItemDto feeCategory;
+    private PartiesDto parties;
+    private LocalDateTime depositDate;
+    private Long amount;
+    private String description;
     private StatusEnum status;
 
-    private CategoryItem feeCategory;
-    private Appraisal appraisal;
-    private Parties parties;
-
+    public static AppraisalFeeDto fromEntity(AppraisalFee appraisalFee) {
+        return AppraisalFeeDto.builder()
+                .id(appraisalFee.getId())
+                .feeCategory(CategoryItemDto.fromEntity(appraisalFee.getFeeCategory()))
+                .parties(PartiesDto.fromEntity(appraisalFee.getParties()))
+                .depositDate(appraisalFee.getDepositDate())
+                .amount(appraisalFee.getAmount())
+                .description(appraisalFee.getDescription())
+                .status(appraisalFee.getStatus())
+                .createdAt(appraisalFee.getCreatedAt())
+                .modifiedAt(appraisalFee.getModifiedAt())
+                .build();
+    }
 }
