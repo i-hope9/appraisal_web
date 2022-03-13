@@ -38,9 +38,9 @@ public class Appraisal extends BaseTime {
     // 재판부
     private String judgePanel;
 
-    private Long judgeTel;
+    private String judgeTel;
 
-    private Long judgeFax;
+    private String judgeFax;
 
     // 사건 구분: (2022가합)
     private String caseType;

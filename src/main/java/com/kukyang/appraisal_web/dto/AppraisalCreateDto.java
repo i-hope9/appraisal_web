@@ -19,8 +19,8 @@ public class AppraisalCreateDto extends BaseTimeDto {
     private String appraisalNumber;
     private Long courtCategoryId;
     private String judgePanel;
-    private Long judgeTel;
-    private Long judgeFax;
+    private String judgeTel;
+    private String judgeFax;
     private String caseType;
     private Long caseNumber;
     private Long appraisalCategoryId;

@@ -18,9 +18,9 @@ public class PartiesDto extends BaseTimeDto {
     private Long id;
     private CategoryItemDto partiesCategory;
     private String name;
-    private Long tel;
+    private String tel;
     private String affiliation;
-    private Long affiliationTel;
+    private String affiliationTel;
     private StatusEnum status;
 
     public static PartiesDto fromEntity(Parties parties) {

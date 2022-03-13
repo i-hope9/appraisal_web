@@ -18,9 +18,9 @@ import lombok.experimental.SuperBuilder;
 public class PartiesCreateDto extends BaseTimeDto {
     private Long partiesCategoryId;
     private String partiesName;
-    private Long partiesTel;
+    private String partiesTel;
     private String affiliation;
-    private Long affiliationTel;
+    private String affiliationTel;
     private StatusEnum status;
 
     private CategoryItem partiesCategory;

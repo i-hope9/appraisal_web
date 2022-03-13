@@ -30,11 +30,11 @@ public class Parties extends BaseTime {
 
     private String name;
 
-    private Long tel;
+    private String tel;
 
     private String affiliation;
 
-    private Long affiliationTel;
+    private String affiliationTel;
 
     @OneToMany(mappedBy = "parties",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
