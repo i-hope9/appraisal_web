@@ -1,26 +1,195 @@
-let $partiesTable = $('#partiesTable')
-let $feeTable = $('#feeTable');
+const COURT_CATEGORY_ID = 1;
+const APPRAISAL_CATEGORY_ID = 2;
+const PARTIES_CATEGORY_ID = 3;
+const FEE_CATEGORY_ID = 4;
 
-function addAppraisal() {
-    let data = {
-        year: $('#year option:selected').val(),
-        appraisalNumber: $('#appraisalNumber').val(),
-        courtCategoryId: $('#courtCategoryId option:selected').val(),
-        judgePanel: $('#judgePanel').val(),
-        judgeTel: $('#judgeTel').val(),
-        judgeFax: $('#judgeFax').val(),
-        caseType: $('#caseType').val(),
-        caseNumber: $('#caseNumber').val(),
-        appraisalCategoryId: $('#appraisalCategoryId option:selected').val(),
-        name: $('#name').val(),
-        objectAddress: $('#objectAddress').val(),
-        objectRemarks: $('#objectRemarks').val(),
-        status: 'ENABLE'
+const DateTime = luxon.DateTime;
+
+let yearOptions = generateYearOptions();
+let courtOptions = generateOptions(COURT_CATEGORY_ID);
+let appraisalCategoryOptions = generateOptions(APPRAISAL_CATEGORY_ID);
+let partiesOptions = generateOptions(PARTIES_CATEGORY_ID);
+let feeOptions = generateOptions(FEE_CATEGORY_ID);
+
+let deleteIcon = function (cell, formatterParams) {
+    return "<i class='fas fa-trash'></i>";
+}
+
+let dateEditor = function (cell, onRendered, success, cancel) {
+    let cellValue = luxon.DateTime.fromFormat(cell.getValue(), "yyyy-MM-dd").toFormat("yyyy-MM-dd"),
+        input = document.createElement("input");
+
+    input.setAttribute("type", "date");
+
+    input.style.padding = "4px";
+    input.style.width = "100%";
+    input.style.boxSizing = "border-box";
+
+    input.value = cellValue;
+
+    onRendered(function () {
+        input.focus();
+        input.style.height = "100%";
+    });
+
+    function onChange() {
+        if (input.value !== cellValue) {
+            success(luxon.DateTime.fromFormat(input.value, "yyyy-MM-dd").toFormat("yyyy-MM-dd"));
+        } else {
+            cancel();
+        }
     }
 
-    data["partiesList"] = $partiesTable.bootstrapTable('getData');
-    data["appraisalFeeList"] = $feeTable.bootstrapTable('getData');
+    input.addEventListener("blur", onChange);
 
+    input.addEventListener("keydown", function (e) {
+        if (KeyboardEvent.code === 13) {
+            onChange();
+        }
+        if (KeyboardEvent.code === 27) {
+            cancel();
+        }
+    });
+
+    return input;
+}
+
+let $overviewTable1 = new Tabulator("#overviewTable1", {
+    data: [{
+        year: 2022,
+        appraisalNumber: "(예시. K220122)",
+        judgePanel: "(예시. 민사5단독)",
+        judgeTel: "(숫자만 입력하세요.)",
+        judgeFax: "(숫자만 입력하세요.)"
+    }],
+    layout: "fitColumns",
+    height: "100%",
+    columns: [
+        {
+            title: "감정연도", field: "year", width: 100, validator: "required", editor: "autocomplete", editorParams: {
+                values: yearOptions,
+                sortValuesList: "desc",
+                showListOnEmpty: true,
+                emptyPlaceholder: "(일치 정보 없음)"
+            }
+        },
+        {title: "감정번호", field: "appraisalNumber", width: 150, validator: "required", editor: "input"},
+        {
+            title: "수소법원", field: "courtCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+                values: courtOptions,
+                showListOnEmpty: true,
+                emptyPlaceholder: "(일치 정보 없음)"
+            }, formatter: "lookup", formatterParams: courtOptions
+        },
+        {title: "재판부", field: "judgePanel", editor: "input"},
+        {title: "전화번호", field: "judgeTel", editor: "input", validator: "numeric"},
+        {title: "팩스번호", field: "judgeFax", editor: "input", validator: "numeric"}
+    ],
+});
+
+let $overviewTable2 = new Tabulator("#overviewTable2", {
+    data: [{caseType: "(예시. 2022가합)", caseNumber: "(예시. 123456)"}],
+    layout: "fitColumns",
+    height: "100%",
+    columns: [
+        {
+            title: "사건번호", width: 300,
+            columns: [
+                {title: "구분", field: "caseType", editor: "input"},
+                {title: "번호", field: "caseNumber", editor: "input", validator: "numeric"}
+            ]
+        },
+        {
+            title: "감정구분", field: "appraisalCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+                values: appraisalCategoryOptions,
+                showListOnEmpty: true,
+                emptyPlaceholder: "(일치 정보 없음)"
+            }, formatter: "lookup", formatterParams: appraisalCategoryOptions
+        },
+        {title: "사건명", field: "name", editor: "input"},
+        {title: "감정목적물", field: "objectAddress", widthGrow: 2, editor: "input"},
+        {title: "감정목적물 비고", field: "objectRemarks", widthGrow: 2, editor: "input"}
+    ]
+});
+
+let $partiesTable = new Tabulator("#partiesTable", {
+    data: [{partiesCategoryId: 56}, {partiesCategoryId: 57}],
+    layout: "fitColumns",
+    height: "100%",
+    columns: [
+        {
+            title: "구분", field: "partiesCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+                values: partiesOptions,
+                showListOnEmpty: true,
+                emptyPlaceholder: "(일치 정보 없음)"
+            }, formatter: "lookup", formatterParams: partiesOptions
+        },
+        {title: "이름", field: "partiesName", validator: "required", editor: "input"},
+        {title: "연락처", field: "partiesTel", editor: "input", validator: "numeric"},
+        {title: "소속 기관", field: "affiliation", editor: "input"},
+        {title: "소속 기관 연락처", field: "affiliationTel", editor: "input", validator: "numeric"},
+        {
+            formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) {
+                cell.getRow().delete()
+            }
+        }
+    ]
+});
+
+let $feeTable = new Tabulator("#feeTable", {
+    data: [{feePartiesCategoryId: 56, feeDate: DateTime.now().toISODate()},
+        {feePartiesCategoryId: 57, feeDate: DateTime.now().toISODate()}],
+    layout: "fitColumns",
+    height: "100%",
+    groupBy: "feePartiesCategoryId",
+    groupHeader: function (value, count, data, group) {
+        return partiesOptions[value];
+    },
+    groupUpdateOnCellEdit: true,
+    columns: [
+        {
+            title: "당사자", field: "feePartiesCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+                values: partiesOptions,
+                showListOnEmpty: true,
+                emptyPlaceholder: "(일치 정보 없음)"
+            }, formatter: "lookup", formatterParams: partiesOptions
+        },
+        {
+            title: "구분", field: "feeCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+                values: feeOptions,
+                showListOnEmpty: true,
+                emptyPlaceholder: "(일치 정보 없음)"
+            }, formatter: "lookup", formatterParams: feeOptions
+        },
+        {title: "날짜", field: "feeDate", sorter: "date", editor: dateEditor},
+        {
+            title: "금액", field: "feeAmount", editor: "number", formatter: "money", formatterParams: {
+                symbol: "₩",
+                precision: false
+            }, bottomCalc: "sum", bottomCalcFormatter: "money", bottomCalcFormatterParams: {
+                symbol: "₩",
+                precision: false
+            }
+        },
+        {
+            formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) {
+                cell.getRow().delete()
+            }
+        }
+    ]
+});
+
+function addAppraisal() {
+    let data = $overviewTable1.getData()[0];
+    let data2 = $overviewTable2.getData()[0];
+    for (let key in data2) {
+        data[key] = data2[key];
+    }
+    data["status"] = "ENABLE";
+    data["partiesList"] = $partiesTable.getData();
+    data["appraisalFeeList"] = $feeTable.getData();
+
+    console.log(data);
     $.ajax({
         url: "/appraisal/info",
         type: "POST",
@@ -36,44 +205,40 @@ function addAppraisal() {
 
 }
 
-function addParties() {
-    let $partiesModal = $('#partiesModal');
-    let parties = {
-        partiesCategoryId: $('#mPartiesCategory option:selected').val(),
-        partiesCategoryText: $('#mPartiesCategory option:selected').text(),
-        partiesName: $('#mPartiesName').val(),
-        partiesTel: $('#mPartiesTel').val(),
-        affiliation: $('#mAffiliation').val(),
-        affiliationTel: $('#mAffiliationTel').val()
-    };
-
-    $partiesTable.bootstrapTable('append', parties);
-    $partiesModal.modal('hide');
-    $partiesModal.children().find('input, select').each(function () {
-        $(this).is('input') ? $(this).val('') : this.selectedIndex = 0;
-    })
-
+function addPartiesRow() {
+    $partiesTable.addRow({});
 }
 
-function addFee() {
-    let $feeModal = $('#feeModal');
-    let fee = {
-        feePartiesCategoryId: $('#mFeePartiesCategory option:selected').val(),
-        feePartiesCategoryText: $('#mFeePartiesCategory option:selected').text(),
-        feeCategoryId: $('#mFeeCategory option:selected').val(),
-        feeCategoryText: $('#mFeeCategory option:selected').text(),
-        feeDate: $('#mFeeDate').val(),
-        feeAmount: $('#mFeeAmount').val()
-    };
-
-    $feeTable.bootstrapTable('append', fee);
-    $feeModal.modal('hide');
-    $feeModal.children().find('input, select').each(function () {
-        $(this).is('input') ? $(this).val('') : this.selectedIndex = 0;
-    })
+function addFeeRow() {
+    $feeTable.addRow({feePartiesCategoryId: 56, feeDate: DateTime.now().toISODate()});
 }
 
-$(function () {
-    $('#overviewTable').bootstrapTable()
-})
+function generateYearOptions() {
+    let values = {};
+    let year = new Date().getFullYear();
 
+    for (let i = 0; i <= 10; i++) {
+        values[year - i] = year - i;
+    }
+    return values;
+}
+
+function generateOptions(id) {
+    let values = {};
+    $.ajax({
+        url: "/appraisal/info/options",
+        type: "GET",
+        async: false,
+        contentType: "application/json",
+        data: {
+            id: id
+        },
+        success: function (response) {
+            values = response;
+        },
+        error: function (request, status, error) {
+            alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+        }
+    })
+    return values;
+}

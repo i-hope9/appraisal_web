@@ -18,75 +18,9 @@
                     <h6 class="m-0 font-weight-bold text-primary">사건 개요</h6>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table table-sm" data-toggle="table" id="overviewTable">
-                    <thead>
-                    <th class="col-2">구분</th>
-                    <th class="col-4">내용</th>
-                    <th class="col-2">구분</th>
-                    <th class="col-4">내용</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th><label for="year" class="col-form-label">감정연도</label></th>
-                        <td>
-                            <select id="year" class="form-control w-50">
-                                <option selected disabled>-- 연도 선택 --</option>
-                                <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
-                            </select>
-                        </td>
-                        <th><label for="appraisalNumber" class="col-form-label">감정번호</label></th>
-                        <td><input type="text" class="form-control" id="appraisalNumber" placeholder="e.g. K999999">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label class="col-form-label" for="courtCategoryId">수소법원</label></th>
-                        <td>
-                            <select class="form-control" id="courtCategoryId">
-                                <option selected disabled>-- 법원 선택 --</option>
-                                <option th:each="court : ${courts}" th:value="${court.id}"
-                                        th:text="${court.name}"></option>
-                            </select>
-                        </td>
-                        <th><label for="judgePanel" class="col-form-label">재판부</label></th>
-                        <td><input id="judgePanel" class="form-control" type="text" placeholder="e.g. 민사5단독"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="judgeTel" class="col-form-label">전화번호</label></th>
-                        <td><input id="judgeTel" class="form-control" type="number" placeholder="숫자만 입력하세요."></td>
-                        <th><label for="judgeFax" class="col-form-label">팩스번호</label></th>
-                        <td><input id="judgeFax" class="form-control" type="number" placeholder="숫자만 입력하세요."></td>
-                    </tr>
-                    <tr>
-                        <th><label for="caseNumber" class="col-form-label">사건번호</label></th>
-                        <td class="input-group"><input id="caseType" class="form-control w-50" type="text"
-                                                       placeholder="e.g. 2022가합">
-                            <input id="caseNumber" class="form-control w-50" type="number" placeholder="e.g. 999999">
-                        </td>
-                        <th><label class="col-form-label" for="appraisalCategoryId">감정구분</label></th>
-                        <td>
-                            <select class="form-control" id="appraisalCategoryId">
-                                <option selected disabled>-- 감정구분 선택 --</option>
-                                <option th:each="appraisalCategory : ${appraisalCategories}"
-                                        th:value="${appraisalCategory.id}"
-                                        th:text="${appraisalCategory.name}"></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label for="name" class="col-form-label">사건명</label></th>
-                        <td><input id="name" class="form-control" type="text"></td>
-                        <th><label for="objectAddress" class="col-form-label">감정목적물</label></th>
-                        <td><input id="objectAddress" class="form-control" type="text"
-                                   placeholder="e.g. 서울시 서초구 서초동 1591-3"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="objectRemarks" class="col-form-label">감정목적물 비고</label></th>
-                        <td colspan="3"><input id="objectRemarks" class="form-control" type="text"
-                                               placeholder="e.g. 아파트 B2/25층 1200세대"></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="card-body p-1">
+                <div class="my-1" id="overviewTable1"></div>
+                <div class="my-1" id="overviewTable2"></div>
             </div>
         </div>
 
@@ -95,24 +29,13 @@
             <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">당사자</h6>
-                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#partiesModal"><i
+                    <button class="btn btn-sm btn-primary" onclick="addPartiesRow()"><i
                             class="fas fa-plus mr-1"></i>추가
                     </button>
                 </div>
             </div>
-            <div class="card-body">
-                <table id="partiesTable" class="table table-sm" data-toggle="table">
-                    <thead>
-                    <th class="d-none" data-field="partiesCategoryId"></th>
-                    <th class="col-2" data-field="partiesCategoryText">구분</th>
-                    <th class="col-2" data-field="partiesName">이름</th>
-                    <th class="col-3" data-field="partiesTel">연락처</th>
-                    <th class="col-2" data-field="affiliation">소속 기관</th>
-                    <th class="col-3" data-field="affiliationTel">소속 기관 연락처</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <div class="card-body p-1">
+                <div class="my-1" id="partiesTable"></div>
             </div>
         </div>
 
@@ -121,24 +44,13 @@
             <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">감정료</h6>
-                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#feeModal"><i
+                    <button class="btn btn-sm btn-primary" onclick="addFeeRow()"><i
                             class="fas fa-plus mr-1"></i>추가
                     </button>
                 </div>
             </div>
-            <div class="card-body">
-                <table id="feeTable" class="table table-sm" data-toggle="table" data-show-footer="true">
-                    <thead>
-                    <th class="d-none" data-field="feePartiesCategoryId"></th>
-                    <th class="col-2" data-field="feePartiesCategoryText" data-sortable="true">당사자</th>
-                    <th class="d-none" data-field="feeCategoryId"></th>
-                    <th data-field="feeCategoryText" class="col-2" data-sortable="true">구분</th>
-                    <th data-field="feeDate" class="col-4">날짜</th>
-                    <th data-field="feeAmount" class="col-4">금액</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <div class="card-body p-1">
+                <div class="my-1" id="feeTable"></div>
             </div>
         </div>
 
@@ -147,10 +59,6 @@
             <button class="btn btn-primary" onclick="addAppraisal()"><i class="fas fa-floppy-disk mr-2"></i>저장</button>
         </div>
 
-        <!-- Parties Modal -->
-        <div th:replace="pages/appraisal/modalParties"></div>
-        <!-- Fee Modal -->
-        <div th:replace="pages/appraisal/modalFee"></div>
     </div>
     <!-- Appraisal Javascript-->
     <script th:src="@{/js/appraisalNew.js}"></script>

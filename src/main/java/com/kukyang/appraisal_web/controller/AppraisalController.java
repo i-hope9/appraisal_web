@@ -8,11 +8,13 @@ import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.PartiesService;
 import com.kukyang.appraisal_web.utils.SelectOptionUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -50,16 +52,6 @@ public class AppraisalController {
 
     @GetMapping("/info")
     public String getAppraisalNew(Model model) {
-        // 연도
-        model.addAttribute("years", selectOptionUtils.generateYearOptions());
-        // 법원
-        model.addAttribute("courts", selectOptionUtils.generateCourtOptions());
-        // 감정구분
-        model.addAttribute("appraisalCategories", selectOptionUtils.generateAppraisalOptions());
-        // 당사자
-        model.addAttribute("partiesCategories", selectOptionUtils.generatePartiesOptions());
-        // 감정료
-        model.addAttribute("feeCategories", selectOptionUtils.generateFeeOptions());
 
         return "pages/appraisal/appraisalNew";
     }
@@ -71,5 +63,12 @@ public class AppraisalController {
         appraisalFeeService.saveAppraisalFeeList(requestDto.getAppraisalFeeList(), appraisal);
 
         return "redirect:/appraisal/all";
+    }
+
+    @ResponseBody
+    @GetMapping("/info/options")
+    public ResponseEntity<?> getOptions(@RequestParam Long id) {
+        Map<Long, String> options = selectOptionUtils.generateOptions(id);
+        return ResponseEntity.ok(options);
     }
 }
