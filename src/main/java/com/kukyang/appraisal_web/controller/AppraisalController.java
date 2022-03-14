@@ -3,17 +3,20 @@ package com.kukyang.appraisal_web.controller;
 import com.kukyang.appraisal_web.domain.model.Appraisal;
 import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
 import com.kukyang.appraisal_web.dto.AppraisalDto;
+import com.kukyang.appraisal_web.dto.AppraisalPageDto;
 import com.kukyang.appraisal_web.service.AppraisalFeeService;
 import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.PartiesService;
 import com.kukyang.appraisal_web.utils.SelectOptionUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -34,12 +37,14 @@ public class AppraisalController {
 
     @ResponseBody
     @GetMapping("/all")
-    public List<AppraisalDto> getAppraisalList(Model model) {
+    public AppraisalPageDto getAppraisalPageableList(@RequestParam int page, @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<Appraisal> appraisals = appraisalService.findAllAppraisals(pageable);
 
-        return appraisalService.findAllAppraisals()
-                .stream()
-                .map(AppraisalDto::fromEntity)
-                .collect(Collectors.toList());
+        return AppraisalPageDto.builder()
+                .totalPage(appraisals.getTotalPages())
+                .data(appraisals.stream().map(AppraisalDto::fromEntity).collect(Collectors.toList()))
+                .build();
     }
 
     @GetMapping("/info/{id}")

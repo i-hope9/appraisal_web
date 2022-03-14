@@ -9,6 +9,8 @@ import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +40,14 @@ public class AppraisalServiceImpl implements AppraisalService {
     @Override
     public List<Appraisal> findAllAppraisals() {
         return appraisalRepository.findAllByStatusNot(StatusEnum.DELETED);
+    }
+
+    /**
+     * 감정 관리 목록 페이징 조회: 삭제 상태가 아닌 모든 감정 관리 목록
+     */
+    @Override
+    public Page<Appraisal> findAllAppraisals(Pageable pageable) {
+        return appraisalRepository.findAllByStatusNot(StatusEnum.DELETED, pageable);
     }
 
     /**
