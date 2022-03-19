@@ -1,15 +1,4 @@
-const COURT_CATEGORY_ID = 1;
-const APPRAISAL_CATEGORY_ID = 2;
-const PARTIES_CATEGORY_ID = 3;
-const FEE_CATEGORY_ID = 4;
-
 const DateTime = luxon.DateTime;
-
-let yearOptions = generateYearOptions();
-let courtOptions = generateOptions(COURT_CATEGORY_ID);
-let appraisalCategoryOptions = generateOptions(APPRAISAL_CATEGORY_ID);
-let partiesOptions = generateOptions(PARTIES_CATEGORY_ID);
-let feeOptions = generateOptions(FEE_CATEGORY_ID);
 
 let deleteIcon = function (cell, formatterParams) {
     return "<i class='fas fa-trash'></i>";
@@ -211,34 +200,4 @@ function addPartiesRow() {
 
 function addFeeRow() {
     $feeTable.addRow({feePartiesCategoryId: 56, feeDate: DateTime.now().toISODate()});
-}
-
-function generateYearOptions() {
-    let values = {};
-    let year = new Date().getFullYear();
-
-    for (let i = 0; i <= 10; i++) {
-        values[year - i] = year - i;
-    }
-    return values;
-}
-
-function generateOptions(id) {
-    let values = {};
-    $.ajax({
-        url: "/appraisal/info/options",
-        type: "GET",
-        async: false,
-        contentType: "application/json",
-        data: {
-            id: id
-        },
-        success: function (response) {
-            values = response;
-        },
-        error: function (request, status, error) {
-            alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
-        }
-    })
-    return values;
 }

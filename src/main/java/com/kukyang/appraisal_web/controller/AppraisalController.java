@@ -9,15 +9,14 @@ import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.PartiesService;
 import com.kukyang.appraisal_web.utils.SelectOptionUtils;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -57,6 +56,16 @@ public class AppraisalController {
 
     @GetMapping("/info")
     public String getAppraisalNew(Model model) {
+        final long COURT_CATEGORY_ID = 1L;
+        final long APPRAISAL_CATEGORY_ID = 2L;
+        final long PARTIES_CATEGORY_ID = 3L;
+        final long FEE_CATEGORY_ID = 4L;
+
+        model.addAttribute("yearOptions", new JSONObject(selectOptionUtils.generateYearOptions()));
+        model.addAttribute("courtOptions", new JSONObject(selectOptionUtils.generateOptions(COURT_CATEGORY_ID)));
+        model.addAttribute("appraisalCategoryOptions", new JSONObject(selectOptionUtils.generateOptions(APPRAISAL_CATEGORY_ID)));
+        model.addAttribute("partiesOptions", new JSONObject(selectOptionUtils.generateOptions(PARTIES_CATEGORY_ID)));
+        model.addAttribute("feeOptions", new JSONObject(selectOptionUtils.generateOptions(FEE_CATEGORY_ID)));
 
         return "pages/appraisal/appraisalNew";
     }
@@ -70,10 +79,10 @@ public class AppraisalController {
         return "redirect:/appraisal/all";
     }
 
-    @ResponseBody
-    @GetMapping("/info/options")
-    public ResponseEntity<?> getOptions(@RequestParam Long id) {
-        Map<Long, String> options = selectOptionUtils.generateOptions(id);
-        return ResponseEntity.ok(options);
-    }
+//    @ResponseBody
+//    @GetMapping("/info/options")
+//    public ResponseEntity<?> getOptions(@RequestParam Long id) {
+//        Map<Long, String> options = selectOptionUtils.generateOptions(id);
+//        return ResponseEntity.ok(options);
+//    }
 }

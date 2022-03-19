@@ -61,6 +61,13 @@
 
     </div>
     <!-- Appraisal Javascript-->
+    <script>
+        let yearOptions = JSON.parse("[[${yearOptions}]]".replaceAll("&quot;", "\""));
+        let courtOptions = JSON.parse("[[${courtOptions}]]".replaceAll("&quot;", "\""));
+        let appraisalCategoryOptions = JSON.parse("[[${appraisalCategoryOptions}]]".replaceAll("&quot;", "\""));
+        let partiesOptions = JSON.parse("[[${partiesOptions}]]".replaceAll("&quot;", "\""));
+        let feeOptions = JSON.parse("[[${feeOptions}]]".replaceAll("&quot;", "\""));
+    </script>
     <script th:src="@{/js/appraisalNew.js}"></script>
 </th:block>
 </html>
