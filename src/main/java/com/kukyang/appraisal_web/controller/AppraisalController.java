@@ -1,5 +1,6 @@
 package com.kukyang.appraisal_web.controller;
 
+import com.google.gson.Gson;
 import com.kukyang.appraisal_web.domain.model.Appraisal;
 import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
 import com.kukyang.appraisal_web.dto.AppraisalDto;
@@ -9,7 +10,6 @@ import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.PartiesService;
 import com.kukyang.appraisal_web.utils.SelectOptionUtils;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -48,24 +50,23 @@ public class AppraisalController {
 
     @GetMapping("/info/{id}")
     public String getAppraisalById(@PathVariable Long id, Model model) {
+        this.setAppraisalOptions(model);
+
         AppraisalDto appraisalDto = AppraisalDto.fromEntity(appraisalService.findAppraisalById(id));
-        model.addAttribute("appraisal", appraisalDto);
+        List<AppraisalDto> appraisalDtoList = new ArrayList<>();
+        appraisalDtoList.add(appraisalDto);
+
+        Gson gson = new Gson();
+        model.addAttribute("appraisal", gson.toJson(appraisalDtoList));
+        model.addAttribute("parties", gson.toJson(appraisalDto.getPartiesList()));
+        model.addAttribute("fees", gson.toJson(appraisalDto.getAppraisalFeeList()));
 
         return "pages/appraisal/appraisalInfo";
     }
 
     @GetMapping("/info")
     public String getAppraisalNew(Model model) {
-        final long COURT_CATEGORY_ID = 1L;
-        final long APPRAISAL_CATEGORY_ID = 2L;
-        final long PARTIES_CATEGORY_ID = 3L;
-        final long FEE_CATEGORY_ID = 4L;
-
-        model.addAttribute("yearOptions", new JSONObject(selectOptionUtils.generateYearOptions()));
-        model.addAttribute("courtOptions", new JSONObject(selectOptionUtils.generateOptions(COURT_CATEGORY_ID)));
-        model.addAttribute("appraisalCategoryOptions", new JSONObject(selectOptionUtils.generateOptions(APPRAISAL_CATEGORY_ID)));
-        model.addAttribute("partiesOptions", new JSONObject(selectOptionUtils.generateOptions(PARTIES_CATEGORY_ID)));
-        model.addAttribute("feeOptions", new JSONObject(selectOptionUtils.generateOptions(FEE_CATEGORY_ID)));
+        this.setAppraisalOptions(model);
 
         return "pages/appraisal/appraisalNew";
     }
@@ -85,4 +86,19 @@ public class AppraisalController {
 //        Map<Long, String> options = selectOptionUtils.generateOptions(id);
 //        return ResponseEntity.ok(options);
 //    }
+
+    private void setAppraisalOptions(Model model) {
+        final long COURT_CATEGORY_ID = 1L;
+        final long APPRAISAL_CATEGORY_ID = 2L;
+        final long PARTIES_CATEGORY_ID = 3L;
+        final long FEE_CATEGORY_ID = 4L;
+
+        Gson gson = new Gson();
+
+        model.addAttribute("yearOptions", gson.toJson(selectOptionUtils.generateYearOptions()));
+        model.addAttribute("courtOptions", gson.toJson(selectOptionUtils.generateCategoryMap(COURT_CATEGORY_ID)));
+        model.addAttribute("appraisalCategoryOptions", gson.toJson(selectOptionUtils.generateCategoryMap(APPRAISAL_CATEGORY_ID)));
+        model.addAttribute("partiesOptions", gson.toJson(selectOptionUtils.generateCategoryMap(PARTIES_CATEGORY_ID)));
+        model.addAttribute("feeOptions", gson.toJson(selectOptionUtils.generateCategoryMap(FEE_CATEGORY_ID)));
+    }
 }

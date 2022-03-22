@@ -44,6 +44,7 @@ public class AppraisalDto extends BaseTimeDto {
                 .appraisalNumber(appraisal.getAppraisalNumber())
                 .courtCategory(CategoryItemDto.fromEntity(appraisal.getCourtCategory()))
                 .judgePanel(appraisal.getJudgePanel())
+                .judgeTel(appraisal.getJudgeTel())
                 .judgeFax(appraisal.getJudgeFax())
                 .caseType(appraisal.getCaseType())
                 .caseNumber(appraisal.getCaseNumber())

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class SelectOptionUtils {
     private final CategoryItemService categoryItemService;
 
-    public Map<Long, String> generateOptions(Long id) {
+    public Map<Long, String> generateCategoryMap(Long id) {
         return categoryItemService.findEnabledCategoryItemsByCategoryId(id)
                 .stream()
                 .collect(Collectors.toMap(CategoryItem::getId, CategoryItem::getName));

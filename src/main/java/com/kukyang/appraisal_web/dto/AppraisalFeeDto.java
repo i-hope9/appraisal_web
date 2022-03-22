@@ -20,6 +20,7 @@ public class AppraisalFeeDto extends BaseTimeDto {
     private Long id;
     private CategoryItemDto feeCategory;
     private PartiesDto parties;
+    private Long feePartiesCategoryId;
     private LocalDateTime depositDate;
     private Long amount;
     private String description;
@@ -30,6 +31,7 @@ public class AppraisalFeeDto extends BaseTimeDto {
                 .id(appraisalFee.getId())
                 .feeCategory(CategoryItemDto.fromEntity(appraisalFee.getFeeCategory()))
                 .parties(PartiesDto.fromEntity(appraisalFee.getParties()))
+                .feePartiesCategoryId(appraisalFee.getParties().getPartiesCategory().getId())
                 .depositDate(appraisalFee.getDepositDate())
                 .amount(appraisalFee.getAmount())
                 .description(appraisalFee.getDescription())

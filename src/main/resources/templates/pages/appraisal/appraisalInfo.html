@@ -21,81 +21,24 @@
                     <h6 class="m-0 font-weight-bold text-primary">사건 개요</h6>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table table-sm" data-toggle="table" id="overviewTable">
-                    <thead>
-                    <th class="col-2">구분</th>
-                    <th class="col-4">내용</th>
-                    <th class="col-2">구분</th>
-                    <th class="col-4">내용</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>감정연도</th>
-                        <td th:text="${appraisal.year}"></td>
-                        <th data-editable="true">감정번호</th>
-                        <td th:text="${appraisal.appraisalNumber}"></td>
-                    </tr>
-                    <tr>
-                        <th>수소법원</th>
-                        <td th:text="${appraisal.courtCategory.name}"></td>
-                        <th>재판부</th>
-                        <td th:text="${appraisal.judgePanel}"></td>
-                    </tr>
-                    <tr>
-                        <th>전화번호</th>
-                        <td th:text="${appraisal.judgeTel}"></td>
-                        <th>팩스번호</th>
-                        <td th:text="${appraisal.judgeFax}"></td>
-                    </tr>
-                    <tr>
-                        <th>사건번호</th>
-                        <td><span th:text="${appraisal.caseType}"></span>
-                            <span th:text="${appraisal.caseNumber}"></span></td>
-                        <th>감정번호</th>
-                        <td th:text="${appraisal.appraisalCategory.name}"></td>
-                    </tr>
-                    <tr>
-                        <th>사건명</th>
-                        <td th:text="${appraisal.name}"></td>
-                        <th>감정목적물</th>
-                        <td th:text="${appraisal.objectAddress}"></td>
-                    </tr>
-                    <tr>
-                        <th>감정목적물 비고</th>
-                        <td colspan="3" th:text="${appraisal.objectRemarks}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="card-body p-1">
+                <div class="my-1" id="overviewTable1"></div>
+                <div class="my-1" id="overviewTable2"></div>
             </div>
         </div>
 
         <!-- Parties table -->
         <div class="card shadow mb-2">
-            <div class="card-header">
+            <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">당사자</h6>
+                    <button class="btn btn-sm btn-primary" onclick="addPartiesRow()"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table table-sm" data-toggle="table" id="partiesTable">
-                    <thead>
-                    <th class="col-2">구분</th>
-                    <th class="col-2">이름</th>
-                    <th class="col-3">연락처</th>
-                    <th class="col-2">소속 기관</th>
-                    <th class="col-3">소속 기관 연락처</th>
-                    </thead>
-                    <tbody>
-                    <tr th:each="parties:${appraisal.partiesList}">
-                        <td th:text="${parties.partiesCategory.name}"></td>
-                        <td th:text="${parties.name}"></td>
-                        <td th:text="${parties.tel}"></td>
-                        <td th:text="${parties.affiliation}"></td>
-                        <td th:text="${parties.affiliationTel}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="card-body p-1">
+                <div class="my-1" id="partiesTable"></div>
             </div>
         </div>
 
@@ -130,28 +73,16 @@
 
         <!-- Fee table -->
         <div class="card shadow mb-2">
-            <div class="card-header">
+            <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">감정료</h6>
+                    <button class="btn btn-sm btn-primary" onclick="addFeeRow()"><i
+                            class="fas fa-plus mr-1"></i>추가
+                    </button>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table table-sm" data-toggle="table" id="feeTable">
-                    <thead>
-                    <th class="col-2" data-sortable="true">당사자</th>
-                    <th class="col-2" data-sortable="true">구분</th>
-                    <th class="col-4">날짜</th>
-                    <th class="col-4">금액</th>
-                    </thead>
-                    <tbody>
-                    <tr th:each="fee:${appraisal.appraisalFeeList}">
-                        <td th:text="${fee.parties.partiesCategory.name}"></td>
-                        <td th:text="${fee.feeCategory.name}"></td>
-                        <td th:text="${fee.depositDate}"></td>
-                        <td th:text="${fee.amount}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="card-body p-1">
+                <div class="my-1" id="feeTable"></div>
             </div>
         </div>
 
@@ -182,6 +113,17 @@
 
     </div>
     <!-- Appraisal Javascript-->
-    <script th:src="@{/js/appraisalNew.js}"></script>
+    <script>
+        let appraisal = JSON.parse("[[${appraisal}]]".replaceAll("&quot;", "\""));
+        let parties = JSON.parse("[[${parties}]]".replaceAll("&quot;", "\""));
+        let fees = JSON.parse("[[${fees}]]".replaceAll("&quot;", "\""));
+
+        let yearOptions = JSON.parse("[[${yearOptions}]]".replaceAll("&quot;", "\""));
+        let courtOptions = JSON.parse("[[${courtOptions}]]".replaceAll("&quot;", "\""));
+        let appraisalCategoryOptions = JSON.parse("[[${appraisalCategoryOptions}]]".replaceAll("&quot;", "\""));
+        let partiesOptions = JSON.parse("[[${partiesOptions}]]".replaceAll("&quot;", "\""));
+        let feeOptions = JSON.parse("[[${feeOptions}]]".replaceAll("&quot;", "\""));
+    </script>
+    <script th:src="@{/js/appraisalInfo.js}"></script>
 </th:block>
 </html>
