@@ -24,9 +24,11 @@ public class SelectOptionUtils {
     public Map<Integer, String> generateYearOptions() {
         Map<Integer, String> years = new HashMap<>();
         int year = LocalDate.now().getYear();
+        years.put(year, String.valueOf(year));
 
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 1; i <= 5; i++) {
             years.put(year - i, String.valueOf(year - i));
+            years.put(year + i, String.valueOf(year + i));
         }
 
         return years;

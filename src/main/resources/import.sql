@@ -74,3 +74,15 @@ INSERT INTO category (name, description, status) VALUES ('감정료', '감정료
 
 INSERT INTO category_item (name, description, category_id, status) VALUES ('예상감정료', '', '4', 'ENABLE');
 INSERT INTO category_item (name, description, category_id, status) VALUES ('추가감정료', '', '4', 'ENABLE');
+
+-- 5. 감정 진행 상황 유형
+INSERT INTO category (name, description, status) VALUES ('감정 진행', '감정 진행 상황 유형', 'ENABLE');
+
+INSERT INTO category_item (name, description, category_id, status) VALUES ('감정인 지정일', '', '5', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status) VALUES ('감정인신문 또는 촉탁', '', '5', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status) VALUES ('현장 조사', '', '5', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status) VALUES ('감정 보고서', '', '5', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status) VALUES ('사실 조회 (원고)', '', '5', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status) VALUES ('사실 조회 (피고)', '', '5', 'ENABLE');
+INSERT INTO category_item (name, description, category_id, status) VALUES ('재판 결과', '', '5', 'ENABLE');
+

@@ -178,7 +178,6 @@ function addAppraisal() {
     data["partiesList"] = $partiesTable.getData();
     data["appraisalFeeList"] = $feeTable.getData();
 
-    console.log(data);
     $.ajax({
         url: "/appraisal/info",
         type: "POST",

@@ -127,6 +127,31 @@ let $partiesTable = new Tabulator("#partiesTable", {
     ]
 });
 
+let $progressTable = new Tabulator("#progressTable", {
+    data: {},
+    layout: "fitColumns",
+    height: "100%",
+    columns: [
+        {title: "날짜", field: "date", sorter: "date", mutator: dateMutator, editor: dateEditor},
+        {
+            title: "구분", field: "partiesCategory.id", validator: "required", editor: "autocomplete", editorParams: {
+                values: partiesOptions,
+                showListOnEmpty: true,
+                emptyPlaceholder: "(일치 정보 없음)"
+            }, formatter: "lookup", formatterParams: partiesOptions
+        },
+        {title: "이름", field: "name", validator: "required", editor: "input"},
+        {title: "연락처", field: "tel", editor: "input", validator: "numeric"},
+        {title: "소속 기관", field: "affiliation", editor: "input"},
+        {title: "소속 기관 연락처", field: "affiliationTel", editor: "input", validator: "numeric"},
+        {
+            formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) {
+                cell.getRow().delete()
+            }
+        }
+    ]
+});
+
 let $feeTable = new Tabulator("#feeTable", {
     data: fees,
     layout: "fitColumns",
