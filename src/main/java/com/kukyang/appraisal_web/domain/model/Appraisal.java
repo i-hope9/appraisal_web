@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -59,12 +59,17 @@ public class Appraisal extends BaseTime {
     @OneToMany(mappedBy = "appraisal",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.EAGER)
-    private List<Parties> partiesList;
+    private Set<Parties> partiesList;
 
     @OneToMany(mappedBy = "appraisal",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.EAGER)
-    private List<AppraisalFee> appraisalFeeList;
+    private Set<AppraisalFee> appraisalFeeList;
+
+    @OneToMany(mappedBy = "appraisal",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.EAGER)
+    private Set<AppraisalProgress> appraisalProgressList;
 
     public static Appraisal toEntity(AppraisalCreateDto dto) {
         return Appraisal.builder()

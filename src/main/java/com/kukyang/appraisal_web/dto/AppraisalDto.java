@@ -33,10 +33,12 @@ public class AppraisalDto extends BaseTimeDto {
 
     private List<PartiesDto> partiesList;
     private List<AppraisalFeeDto> appraisalFeeList;
+    private List<AppraisalProgressDto> appraisalProgressList;
 
     public static AppraisalDto fromEntity(Appraisal appraisal) {
         List<PartiesDto> partiesList = appraisal.getPartiesList().stream().map(PartiesDto::fromEntity).collect(Collectors.toList());
         List<AppraisalFeeDto> appraisalFeeList = appraisal.getAppraisalFeeList().stream().map(AppraisalFeeDto::fromEntity).collect(Collectors.toList());
+        List<AppraisalProgressDto> appraisalProgressList = appraisal.getAppraisalProgressList().stream().map(AppraisalProgressDto::fromEntity).collect(Collectors.toList());
 
         return AppraisalDto.builder()
                 .id(appraisal.getId())
@@ -55,6 +57,7 @@ public class AppraisalDto extends BaseTimeDto {
                 .status(appraisal.getStatus())
                 .partiesList(partiesList)
                 .appraisalFeeList(appraisalFeeList)
+                .appraisalProgressList(appraisalProgressList)
                 .createdAt(appraisal.getCreatedAt())
                 .modifiedAt(appraisal.getModifiedAt())
                 .build();

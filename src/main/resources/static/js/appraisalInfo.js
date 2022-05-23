@@ -128,22 +128,19 @@ let $partiesTable = new Tabulator("#partiesTable", {
 });
 
 let $progressTable = new Tabulator("#progressTable", {
-    data: {},
+    data: progresses,
     layout: "fitColumns",
     height: "100%",
     columns: [
-        {title: "날짜", field: "date", sorter: "date", mutator: dateMutator, editor: dateEditor},
+        {title: "날짜", field: "progressDate", sorter: "date", mutator: dateMutator, editor: dateEditor},
         {
-            title: "구분", field: "partiesCategory.id", validator: "required", editor: "autocomplete", editorParams: {
-                values: partiesOptions,
+            title: "구분", field: "progressCategory.id", validator: "required", editor: "autocomplete", editorParams: {
+                values: progressOptions,
                 showListOnEmpty: true,
                 emptyPlaceholder: "(일치 정보 없음)"
             }, formatter: "lookup", formatterParams: partiesOptions
         },
-        {title: "이름", field: "name", validator: "required", editor: "input"},
-        {title: "연락처", field: "tel", editor: "input", validator: "numeric"},
-        {title: "소속 기관", field: "affiliation", editor: "input"},
-        {title: "소속 기관 연락처", field: "affiliationTel", editor: "input", validator: "numeric"},
+        {title: "비고", field: "description", validator: "required", editor: "input"},
         {
             formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) {
                 cell.getRow().delete()
@@ -200,4 +197,8 @@ function addPartiesRow() {
 
 function addFeeRow() {
     $feeTable.addRow({feePartiesCategoryId: 56, feeDate: DateTime.now().toISODate()});
+}
+
+function addProgressRow() {
+    $feeTable.addRow({progressDate: DateTime.now().toISODate()});
 }
