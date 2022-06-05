@@ -1,54 +1,5 @@
-const DateTime = luxon.DateTime;
-
 let deleteIcon = function (cell, formatterParams) {
     return "<i class='fas fa-trash'></i>";
-}
-
-let dateMutator = function (value, data, type, params, component) {
-    let date = value['date'];
-    if (date['month'].toString().length === 1) {
-        date['month'] = '0' + date['month'].toString();
-    }
-    return date['year'] + '-' + date['month'] + '-' + date['day'];
-}
-
-let dateEditor = function (cell, onRendered, success, cancel) {
-    let cellValue = luxon.DateTime.fromFormat(cell.getValue(), "yyyy-MM-dd").toFormat("yyyy-MM-dd"),
-        input = document.createElement("input");
-
-    input.setAttribute("type", "date");
-
-    input.style.padding = "4px";
-    input.style.width = "100%";
-    input.style.boxSizing = "border-box";
-
-    input.value = cellValue;
-
-    onRendered(function () {
-        input.focus();
-        input.style.height = "100%";
-    });
-
-    function onChange() {
-        if (input.value !== cellValue) {
-            success(luxon.DateTime.fromFormat(input.value, "yyyy-MM-dd").toFormat("yyyy-MM-dd"));
-        } else {
-            cancel();
-        }
-    }
-
-    input.addEventListener("blur", onChange);
-
-    input.addEventListener("keydown", function (e) {
-        if (KeyboardEvent.code === 13) {
-            onChange();
-        }
-        if (KeyboardEvent.code === 27) {
-            cancel();
-        }
-    });
-
-    return input;
 }
 
 let $overviewTable1 = new Tabulator("#overviewTable1", {
@@ -132,14 +83,14 @@ let $progressTable = new Tabulator("#progressTable", {
     layout: "fitColumns",
     height: "100%",
     columns: [
-        {title: "날짜", field: "progressDate", sorter: "date", mutator: dateMutator, editor: dateEditor},
         {
             title: "구분", field: "progressCategory.id", validator: "required", editor: "autocomplete", editorParams: {
                 values: progressOptions,
                 showListOnEmpty: true,
                 emptyPlaceholder: "(일치 정보 없음)"
-            }, formatter: "lookup", formatterParams: partiesOptions
+            }, formatter: "lookup", formatterParams: progressOptions
         },
+        {title: "날짜", field: "progressDate", sorter: "date", mutator: dateMutator, editor: dateEditor},
         {title: "비고", field: "description", validator: "required", editor: "input"},
         {
             formatter: deleteIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) {
@@ -200,5 +151,5 @@ function addFeeRow() {
 }
 
 function addProgressRow() {
-    $feeTable.addRow({progressDate: DateTime.now().toISODate()});
+    $progressTable.addRow({progressDate: DateTime.now().toISODate()});
 }

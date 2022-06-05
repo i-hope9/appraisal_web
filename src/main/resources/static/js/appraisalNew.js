@@ -1,46 +1,5 @@
-const DateTime = luxon.DateTime;
-
 let deleteIcon = function (cell, formatterParams) {
     return "<i class='fas fa-trash'></i>";
-}
-
-let dateEditor = function (cell, onRendered, success, cancel) {
-    let cellValue = luxon.DateTime.fromFormat(cell.getValue(), "yyyy-MM-dd").toFormat("yyyy-MM-dd"),
-        input = document.createElement("input");
-
-    input.setAttribute("type", "date");
-
-    input.style.padding = "4px";
-    input.style.width = "100%";
-    input.style.boxSizing = "border-box";
-
-    input.value = cellValue;
-
-    onRendered(function () {
-        input.focus();
-        input.style.height = "100%";
-    });
-
-    function onChange() {
-        if (input.value !== cellValue) {
-            success(luxon.DateTime.fromFormat(input.value, "yyyy-MM-dd").toFormat("yyyy-MM-dd"));
-        } else {
-            cancel();
-        }
-    }
-
-    input.addEventListener("blur", onChange);
-
-    input.addEventListener("keydown", function (e) {
-        if (KeyboardEvent.code === 13) {
-            onChange();
-        }
-        if (KeyboardEvent.code === 27) {
-            cancel();
-        }
-    });
-
-    return input;
 }
 
 let $overviewTable1 = new Tabulator("#overviewTable1", {
