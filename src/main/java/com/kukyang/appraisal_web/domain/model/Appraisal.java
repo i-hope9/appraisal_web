@@ -71,6 +71,11 @@ public class Appraisal extends BaseTime {
             fetch = FetchType.EAGER)
     private Set<AppraisalProgress> appraisalProgressList;
 
+    @OneToMany(mappedBy = "appraisal",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.EAGER)
+    private Set<AppraisalFeeProgress> appraisalFeeProgressList;
+
     public static Appraisal toEntity(AppraisalCreateDto dto) {
         return Appraisal.builder()
                 .courtCategory(dto.getCourtCategory())

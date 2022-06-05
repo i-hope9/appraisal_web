@@ -23,6 +23,7 @@ public class AppraisalFeeDto extends BaseTimeDto {
     private Long feePartiesCategoryId;
     private LocalDateTime depositDate;
     private Long amount;
+    private Long remainder;
     private String description;
     private StatusEnum status;
 
@@ -34,6 +35,7 @@ public class AppraisalFeeDto extends BaseTimeDto {
                 .feePartiesCategoryId(appraisalFee.getParties().getPartiesCategory().getId())
                 .depositDate(appraisalFee.getDepositDate())
                 .amount(appraisalFee.getAmount())
+                .remainder(appraisalFee.getRemainder())
                 .description(appraisalFee.getDescription())
                 .status(appraisalFee.getStatus())
                 .createdAt(appraisalFee.getCreatedAt())

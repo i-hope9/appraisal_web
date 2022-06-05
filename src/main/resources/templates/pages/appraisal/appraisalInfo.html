@@ -75,23 +75,13 @@
             <div class="card-header py-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">감정료 입금 현황</h6>
-                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryModal"><i
+                    <button class="btn btn-sm btn-primary" onclick="addFeeProgressRow()"><i
                             class="fas fa-plus mr-1"></i>추가
                     </button>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table table-sm" data-toggle="table" id="feeDepositsTable">
-                    <thead>
-                    <th data-sortable="true">당사자</th>
-                    <th data-sortable="true">날짜</th>
-                    <th>입금 금액</th>
-                    <th>기존 잔금</th>
-                    <th>잔금</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <div class="card-body p-1">
+                <div class="my-1" id="feeProgressTable"></div>
             </div>
         </div>
 
@@ -99,9 +89,11 @@
     <!-- Appraisal Javascript-->
     <script>
         let appraisal = JSON.parse("[[${appraisal}]]".replaceAll("&quot;", "\""));
-        let parties = JSON.parse("[[${parties}]]".replaceAll("&quot;", "\""));
-        let fees = JSON.parse("[[${fees}]]".replaceAll("&quot;", "\""));
-        let progresses = JSON.parse("[[${progresses}]]".replaceAll("&quot;", "\""))
+        let fees = appraisal[0].appraisalFeeList;
+        let parties = appraisal[0].partiesList;
+        let progresses = appraisal[0].appraisalProgressList;
+        let feeProgresses = appraisal[0].appraisalFeeProgressList;
+
 
         let yearOptions = JSON.parse("[[${yearOptions}]]".replaceAll("&quot;", "\""));
         let courtOptions = JSON.parse("[[${courtOptions}]]".replaceAll("&quot;", "\""));

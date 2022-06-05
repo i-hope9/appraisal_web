@@ -2,7 +2,7 @@ package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import com.kukyang.appraisal_web.dto.AppraisalFeeCreateDto;
+import com.kukyang.appraisal_web.dto.AppraisalFeeProgressCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppraisalFee extends BaseTime {
+public class AppraisalFeeProgress extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,30 +29,22 @@ public class AppraisalFee extends BaseTime {
     @JoinColumn(name = "parties_id")
     private Parties parties;
 
-    @OneToOne
-    @JoinColumn(name = "fee_category_id", referencedColumnName = "id")
-    private CategoryItem feeCategory;
-
     private LocalDateTime depositDate;
 
     private Long amount;
-
-    private Long remainder;
 
     private String description;
 
     private StatusEnum status;
 
-    public static AppraisalFee toEntity(AppraisalFeeCreateDto appraisalFeeDto) {
-        return AppraisalFee.builder()
-                .appraisal(appraisalFeeDto.getAppraisal())
-                .parties(appraisalFeeDto.getParties())
-                .feeCategory(appraisalFeeDto.getFeeCategory())
-                .depositDate(appraisalFeeDto.getFeeDate().atStartOfDay())
-                .amount(appraisalFeeDto.getFeeAmount())
-                .remainder(appraisalFeeDto.getRemainder())
-                .status(appraisalFeeDto.getStatus())
+    public static AppraisalFeeProgress toEntity(AppraisalFeeProgressCreateDto dto) {
+        return AppraisalFeeProgress.builder()
+                .appraisal(dto.getAppraisal())
+                .parties(dto.getParties())
+                .depositDate(dto.getDepositDate().atStartOfDay())
+                .amount(dto.getAmount())
+                .description(dto.getDescription())
+                .status(dto.getStatus())
                 .build();
     }
-
 }

@@ -1,7 +1,6 @@
 package com.kukyang.appraisal_web.dto;
 
 import com.kukyang.appraisal_web.domain.model.Appraisal;
-import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.Parties;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
@@ -19,17 +18,13 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppraisalFeeCreateDto extends BaseTimeDto {
-    private Long feePartiesCategoryId;
-    private Long feeCategoryId;
+public class AppraisalFeeProgressCreateDto extends BaseTimeDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate feeDate;
-    private Long feeAmount;
-    private Long remainder;
+    private LocalDate depositDate;
+    private Long amount;
+    private String description;
     private StatusEnum status;
 
-    private CategoryItem feeCategory;
     private Appraisal appraisal;
     private Parties parties;
-
 }

@@ -71,9 +71,6 @@ public class AppraisalController {
 
         Gson gson = new Gson();
         model.addAttribute("appraisal", gson.toJson(appraisalDtoList));
-        model.addAttribute("parties", gson.toJson(appraisalDto.getPartiesList()));
-        model.addAttribute("fees", gson.toJson(appraisalDto.getAppraisalFeeList()));
-        model.addAttribute("progresses", gson.toJson(appraisalDto.getAppraisalProgressList()));
 
         return "pages/appraisal/appraisalInfo";
     }
