@@ -5,6 +5,7 @@ import com.kukyang.appraisal_web.domain.model.Appraisal;
 import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
 import com.kukyang.appraisal_web.dto.AppraisalDto;
 import com.kukyang.appraisal_web.dto.AppraisalPageDto;
+import com.kukyang.appraisal_web.dto.AppraisalUpdateDto;
 import com.kukyang.appraisal_web.service.AppraisalFeeService;
 import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.PartiesService;
@@ -93,6 +94,13 @@ public class AppraisalController {
         appraisalFeeService.saveAppraisalFeeList(requestDto.getAppraisalFeeList(), appraisal);
 
         return "redirect:/appraisal/all?page=1";
+    }
+
+    @ResponseBody
+    @PutMapping("/info/{id}")
+    public AppraisalDto updateAppraisalById(@PathVariable Long id, @RequestBody AppraisalUpdateDto requestDto) {
+        Appraisal appraisal = appraisalService.updateAppraisal(id, requestDto);
+        return AppraisalDto.fromEntity(appraisal);
     }
 
 //    @ResponseBody

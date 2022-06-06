@@ -17,7 +17,7 @@ let $overviewTable1 = new Tabulator("#overviewTable1", {
         },
         {title: "감정번호", field: "appraisalNumber", width: 150, validator: "required", editor: "input"},
         {
-            title: "수소법원", field: "courtCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+            title: "수소법원", field: "courtCategory.id", validator: "required", editor: "autocomplete", editorParams: {
                 values: courtOptions,
                 showListOnEmpty: true,
                 emptyPlaceholder: "(일치 정보 없음)"
@@ -42,7 +42,7 @@ let $overviewTable2 = new Tabulator("#overviewTable2", {
             ]
         },
         {
-            title: "감정구분", field: "appraisalCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+            title: "감정구분", field: "appraisalCategory.id", validator: "required", editor: "autocomplete", editorParams: {
                 values: appraisalCategoryOptions,
                 showListOnEmpty: true,
                 emptyPlaceholder: "(일치 정보 없음)"
@@ -60,7 +60,7 @@ let $partiesTable = new Tabulator("#partiesTable", {
     height: "100%",
     columns: [
         {
-            title: "구분", field: "partiesCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+            title: "구분", field: "partiesCategory.id", validator: "required", editor: "autocomplete", editorParams: {
                 values: partiesOptions,
                 showListOnEmpty: true,
                 emptyPlaceholder: "(일치 정보 없음)"
@@ -187,8 +187,32 @@ let $feeProgressTable = new Tabulator("#feeProgressTable", {
 });
 
 $overviewTable1.on("dataChanged", function (data) {
-
+    updateAppraisal(data);
 })
+
+$overviewTable2.on("dataChanged", function (data) {
+    updateAppraisal(data);
+})
+
+function updateAppraisal(data) {
+    data = data[0];
+    let id = data['id'];
+    data['courtCategoryId'] = data['courtCategory']['id'];
+    data['appraisalCategoryId'] = data['appraisalCategory']['id'];
+
+    $.ajax({
+        url: "/appraisal/info/" + id,
+        type: "PUT",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+        }
+    })
+}
 
 function addPartiesRow() {
     $partiesTable.addRow({});

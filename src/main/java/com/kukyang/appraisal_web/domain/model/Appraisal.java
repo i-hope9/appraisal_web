@@ -3,10 +3,12 @@ package com.kukyang.appraisal_web.domain.model;
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
+import com.kukyang.appraisal_web.dto.AppraisalUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Entity
 @Builder
 @Getter
+@DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
 public class Appraisal extends BaseTime {
@@ -91,5 +94,20 @@ public class Appraisal extends BaseTime {
                 .objectRemarks(dto.getObjectRemarks())
                 .status(dto.getStatus())
                 .build();
+    }
+
+    public void updateAppraisal(AppraisalUpdateDto dto) {
+        this.courtCategory = dto.getCourtCategory();
+        this.appraisalCategory = dto.getAppraisalCategory();
+        this.year = dto.getYear();
+        this.appraisalNumber = dto.getAppraisalNumber();
+        this.judgePanel = dto.getJudgePanel();
+        this.judgeFax = dto.getJudgeFax();
+        this.caseType = dto.getCaseType();
+        this.caseNumber = dto.getCaseNumber();
+        this.name = dto.getName();
+        this.objectAddress = dto.getObjectAddress();
+        this.objectRemarks = dto.getObjectRemarks();
+        this.status = dto.getStatus();
     }
 }

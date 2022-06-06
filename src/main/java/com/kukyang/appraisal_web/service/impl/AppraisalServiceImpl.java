@@ -5,6 +5,7 @@ import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.AppraisalRepository;
 import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
+import com.kukyang.appraisal_web.dto.AppraisalUpdateDto;
 import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
@@ -57,5 +58,18 @@ public class AppraisalServiceImpl implements AppraisalService {
     public Appraisal findAppraisalById(Long id) {
         return appraisalRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("감정 관리를 찾을 수 없습니다. (ID: " + id + ")"));
+    }
+
+    @Override
+    public Appraisal updateAppraisal(Long id, AppraisalUpdateDto updateDto) {
+        Appraisal appraisal = findAppraisalById(id);
+        CategoryItem courtCategory = categoryItemService.findCategoryItemById(updateDto.getCourtCategoryId());
+        CategoryItem appraisalCategory = categoryItemService.findCategoryItemById(updateDto.getAppraisalCategoryId());
+        updateDto.setCourtCategory(courtCategory);
+        updateDto.setAppraisalCategory(appraisalCategory);
+
+        appraisal.updateAppraisal(updateDto);
+
+        return appraisalRepository.save(appraisal);
     }
 }
