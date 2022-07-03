@@ -5,8 +5,8 @@ import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.dto.appraisalFee.AppraisalFeeDto;
 import com.kukyang.appraisal_web.dto.appraisalFee.AppraisalFeeProgressDto;
 import com.kukyang.appraisal_web.dto.appraisalParties.PartiesDto;
+import com.kukyang.appraisal_web.dto.appraisalProgress.ProgressDto;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
-import com.kukyang.appraisal_web.dto.appraisalProgress.AppraisalProgressDto;
 import com.kukyang.appraisal_web.dto.category.CategoryItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -38,13 +38,13 @@ public class AppraisalDto extends BaseTimeDto {
 
     private List<PartiesDto> partiesList;
     private List<AppraisalFeeDto> appraisalFeeList;
-    private List<AppraisalProgressDto> appraisalProgressList;
+    private List<ProgressDto> appraisalProgressList;
     private List<AppraisalFeeProgressDto> appraisalFeeProgressList;
 
     public static AppraisalDto fromEntity(Appraisal appraisal) {
         List<PartiesDto> partiesList = appraisal.getPartiesList().stream().map(PartiesDto::fromEntity).collect(Collectors.toList());
         List<AppraisalFeeDto> appraisalFeeList = appraisal.getAppraisalFeeList().stream().map(AppraisalFeeDto::fromEntity).collect(Collectors.toList());
-        List<AppraisalProgressDto> appraisalProgressList = appraisal.getAppraisalProgressList().stream().map(AppraisalProgressDto::fromEntity).collect(Collectors.toList());
+        List<ProgressDto> appraisalProgressList = appraisal.getAppraisalProgressList().stream().map(ProgressDto::fromEntity).collect(Collectors.toList());
         List<AppraisalFeeProgressDto> feeProgressList = appraisal.getAppraisalFeeProgressList().stream().map(AppraisalFeeProgressDto::fromEntity).collect(Collectors.toList());
 
         return AppraisalDto.builder()

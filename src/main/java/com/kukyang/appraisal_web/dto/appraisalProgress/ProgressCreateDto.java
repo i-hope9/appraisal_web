@@ -18,8 +18,8 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppraisalProgressCreateDto extends BaseTimeDto {
-    private Long appraisalProgressCategoryId;
+public class ProgressCreateDto extends BaseTimeDto {
+    private Long progressCategoryId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate progressDate;
     private String description;

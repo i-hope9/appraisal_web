@@ -2,12 +2,6 @@ let deleteIcon = function (cell, formatterParams) {
     return "<i class='fas fa-trash'></i>";
 }
 
-const DATA_TYPE = {
-    INSERT: "insert",
-    UPDATE: "update"
-}
-let tempCell;
-
 let $overviewTable1 = new Tabulator("#overviewTable1", {
     data: appraisal,
     layout: "fitColumns",
@@ -90,7 +84,7 @@ let $progressTable = new Tabulator("#progressTable", {
     height: "100%",
     columns: [
         {
-            title: "구분", field: "progressCategoryId", validator: "required", editor: "autocomplete", editorParams: {
+            title: "구분", field: "progressCategory.id", validator: "required", editor: "autocomplete", editorParams: {
                 values: progressOptions,
                 showListOnEmpty: true,
                 emptyPlaceholder: "(일치 정보 없음)"
@@ -201,26 +195,22 @@ $overviewTable2.on("dataChanged", function (data) {
 })
 
 $partiesTable.on("rowAdded", function (row) {
-
-})
-
-$partiesTable.on("dataChanged", function (data) {
-    console.log(data);
-    // updateParties(data);
+    createParties(row.getData());
 })
 
 $partiesTable.on("cellEdited", function (cell) {
-    console.log("$partiesTable cellEdited");
-    console.log(cell);
-    tempCell = cell;
-
+    updateParties(cell.getData());
 })
 
-$progressTable.on("dataChanged", function (data) {
-    if (data[0]['flag'] === undefined)
-        data[0]['flag'] = DATA_TYPE.UPDATE;
-    updateProgress(data);
+$progressTable.on("rowAdded", function (row) {
+    createProgress(row.getData());
 })
+
+$progressTable.on("cellEdited", function (cell) {
+    console.log("cell.getData()" + cell.getData());
+    updateProgress(cell.getData());
+})
+
 
 function updateAppraisal(data) {
     data = data[0];
@@ -242,18 +232,50 @@ function updateAppraisal(data) {
     })
 }
 
+function createParties(data) {
+    let url = "/appraisal/" + appraisalId + "/parties";
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function () {
+            $partiesTable.setData(url);
+        },
+        error: function (request, status, error) {
+            alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+        }
+    })
+}
+
 function updateParties(data) {
-    data = data[0];
+    let url = "/appraisal/" + appraisalId + "/parties";
     let id = data['id'];
     data['partiesCategoryId'] = data['partiesCategory']['id'];
 
     $.ajax({
-        url: "/appraisal/detail/parties/" + id,
+        url: url + "/" + id,
         type: "PUT",
         data: JSON.stringify(data),
         contentType: "application/json",
-        success: function (data) {
-            console.log(data);
+        success: function () {
+            $partiesTable.setData(url);
+        },
+        error: function (request, status, error) {
+            alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+        }
+    })
+}
+
+function createProgress(data) {
+    let url = "/appraisal/" + appraisalId + "/progress";
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function () {
+            $progressTable.setData(url);
         },
         error: function (request, status, error) {
             alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
@@ -262,34 +284,27 @@ function updateParties(data) {
 }
 
 function updateProgress(data) {
-    data = data[0];
-    let flag = data['flag'];
-    switch (flag) {
-        case DATA_TYPE.INSERT:
+    let url = "/appraisal/" + appraisalId + "/progress";
+    let id = data['id'];
+    console.log(data);
+    data['progressCategoryId'] = data['progressCategory']['id'];
 
-            data['flag'] = DATA_TYPE.UPDATE;
-
-    }
-    // let id = data['id'] === undefined ? null : data['id'];
-    console.log(flag);
-    // data['partiesCategoryId'] = data['partiesCategory']['id'];
-    //
-    // $.ajax({
-    //     url: "/appraisal/detail/parties/" + id,
-    //     type: "PUT",
-    //     data: JSON.stringify(data),
-    //     contentType: "application/json",
-    //     success: function (data) {
-    //         console.log(data);
-    //     },
-    //     error: function (request, status, error) {
-    //         alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
-    //     }
-    // })
+    $.ajax({
+        url: url + "/" + id,
+        type: "PUT",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function () {
+            $progressTable.setData(url);
+        },
+        error: function (request, status, error) {
+            alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+        }
+    })
 }
 
 function addPartiesRow() {
-    $partiesTable.addRow({});
+    $partiesTable.addRow({partiesCategoryId: 56});
 }
 
 function addFeeRow() {
@@ -297,7 +312,7 @@ function addFeeRow() {
 }
 
 function addProgressRow() {
-    $progressTable.addRow({progressDate: DateTime.now().toISODate(), flag: DATA_TYPE.INSERT});
+    $progressTable.addRow({progressCategoryId: 62, progressDate: DateTime.now().toISODate()});
 }
 
 function addFeeProgressRow() {

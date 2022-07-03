@@ -12,6 +12,9 @@ public interface PartiesService {
 
     /* Create */
     @Transactional
+    Parties saveParties(Long appraisalId, PartiesCreateDto partiesDto);
+
+    @Transactional
     Parties saveParties(PartiesCreateDto partiesDto);
 
     @Transactional
@@ -23,6 +26,9 @@ public interface PartiesService {
 
     @Transactional
     Parties findByAppraisalAndPartiesCategory(Long appraisalId, Long partiesId);
+
+    @Transactional
+    List<Parties> findByAppraisalId(Long appraisalId);
 
     /* Update */
     @Transactional

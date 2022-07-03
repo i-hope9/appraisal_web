@@ -94,7 +94,7 @@
         let progresses = appraisal[0].appraisalProgressList;
         let feeProgresses = appraisal[0].appraisalFeeProgressList;
 
-
+        const appraisalId = appraisal[0].id;
         let yearOptions = JSON.parse("[[${yearOptions}]]".replaceAll("&quot;", "\""));
         let courtOptions = JSON.parse("[[${courtOptions}]]".replaceAll("&quot;", "\""));
         let appraisalCategoryOptions = JSON.parse("[[${appraisalCategoryOptions}]]".replaceAll("&quot;", "\""));

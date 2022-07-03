@@ -7,6 +7,7 @@ import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.PartiesRepository;
 import com.kukyang.appraisal_web.dto.appraisalParties.PartiesCreateDto;
 import com.kukyang.appraisal_web.dto.appraisalParties.PartiesUpdateDto;
+import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.PartiesService;
 import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
@@ -19,8 +20,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PartiesServiceImpl implements PartiesService {
+    private final AppraisalService appraisalService;
     private final PartiesRepository partiesRepository;
     private final CategoryItemService categoryItemService;
+
+    /**
+     * 당사자 저장
+     */
+    @Override
+    public Parties saveParties(Long appraisalId, PartiesCreateDto partiesDto) {
+        Appraisal appraisal = appraisalService.findAppraisalById(appraisalId);
+        partiesDto.setAppraisal(appraisal);
+
+        return this.saveParties(partiesDto);
+    }
 
     /**
      * 당사자 저장
@@ -48,7 +61,7 @@ public class PartiesServiceImpl implements PartiesService {
     }
 
     /**
-     * 당사자 조회: ID로 조
+     * 당사자 조회: ID로 조회
      */
     @Override
     public Parties findById(Long partiesId) {
@@ -63,6 +76,14 @@ public class PartiesServiceImpl implements PartiesService {
     public Parties findByAppraisalAndPartiesCategory(Long appraisalId, Long partiesId) {
         return partiesRepository.findByAppraisalIdAndPartiesCategoryId(appraisalId, partiesId)
                 .orElseThrow(() -> new ResourceNotFoundException("당사자를 찾을 수 없습니다."));
+    }
+
+    /**
+     * 당사자 조회: 감정 ID로 조회
+     */
+    @Override
+    public List<Parties> findByAppraisalId(Long appraisalId) {
+        return partiesRepository.findByAppraisalId(appraisalId);
     }
 
     /**

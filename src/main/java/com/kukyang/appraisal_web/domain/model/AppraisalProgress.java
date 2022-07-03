@@ -2,7 +2,8 @@ package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import com.kukyang.appraisal_web.dto.appraisalProgress.AppraisalProgressCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalProgress.ProgressCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalProgress.ProgressUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,7 +36,7 @@ public class AppraisalProgress extends BaseTime {
 
     private StatusEnum status;
 
-    public static AppraisalProgress toEntity(AppraisalProgressCreateDto dto) {
+    public static AppraisalProgress toEntity(ProgressCreateDto dto) {
         return AppraisalProgress.builder()
                 .progressCategory(dto.getProgressCategory())
                 .appraisal(dto.getAppraisal())
@@ -43,5 +44,12 @@ public class AppraisalProgress extends BaseTime {
                 .description(dto.getDescription())
                 .status(dto.getStatus())
                 .build();
+    }
+
+    public void updateProgress(ProgressUpdateDto dto) {
+        this.progressCategory = dto.getProgressCategory();
+        this.progressDate = dto.getProgressDate().atStartOfDay();
+        this.description = dto.getDescription();
+        this.status = dto.getStatus();
     }
 }
