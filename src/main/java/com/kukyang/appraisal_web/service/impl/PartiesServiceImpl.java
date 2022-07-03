@@ -5,7 +5,8 @@ import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.Parties;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.PartiesRepository;
-import com.kukyang.appraisal_web.dto.PartiesCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesUpdateDto;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.PartiesService;
 import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
@@ -47,11 +48,34 @@ public class PartiesServiceImpl implements PartiesService {
     }
 
     /**
+     * 당사자 조회: ID로 조
+     */
+    @Override
+    public Parties findById(Long partiesId) {
+        return partiesRepository.findById(partiesId)
+                .orElseThrow(() -> new ResourceNotFoundException("당사자를 찾을 수 없습니다."));
+    }
+
+    /**
      * 당사자 조회: 감정 ID, 당사자 유형 ID로 조회
      */
     @Override
     public Parties findByAppraisalAndPartiesCategory(Long appraisalId, Long partiesId) {
         return partiesRepository.findByAppraisalIdAndPartiesCategoryId(appraisalId, partiesId)
                 .orElseThrow(() -> new ResourceNotFoundException("당사자를 찾을 수 없습니다."));
+    }
+
+    /**
+     * 당사자 수정
+     */
+    @Override
+    public Parties updateParties(Long partiesId, PartiesUpdateDto updateDto) {
+        Parties parties = findById(partiesId);
+        CategoryItem partiesCategory = categoryItemService.findCategoryItemById(updateDto.getPartiesCategoryId());
+        updateDto.setPartiesCategory(partiesCategory);
+
+        parties.updateParties(updateDto);
+
+        return partiesRepository.save(parties);
     }
 }

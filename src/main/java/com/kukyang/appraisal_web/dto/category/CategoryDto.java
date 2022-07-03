@@ -1,4 +1,4 @@
-package com.kukyang.appraisal_web.dto;
+package com.kukyang.appraisal_web.dto.category;
 
 import com.kukyang.appraisal_web.domain.model.Category;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;

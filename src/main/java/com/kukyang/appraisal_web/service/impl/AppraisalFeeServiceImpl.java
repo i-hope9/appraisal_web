@@ -6,10 +6,12 @@ import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.Parties;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.AppraisalFeeRepository;
-import com.kukyang.appraisal_web.dto.AppraisalFeeCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalFee.AppraisalFeeCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalFee.AppraisalFeeUpdateDto;
 import com.kukyang.appraisal_web.service.AppraisalFeeService;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.PartiesService;
+import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +50,27 @@ public class AppraisalFeeServiceImpl implements AppraisalFeeService {
             results.add(this.saveAppraisalFee(appraisalFeeDto));
         }
         return results;
+    }
+
+    @Override
+    public AppraisalFee findById(Long appraisalFeeId) {
+        return feeRepository.findById(appraisalFeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("감정료를 찾을 수 없습니다."));
+    }
+
+    /**
+     * 감정료 수정
+     */
+    @Override
+    public AppraisalFee updateAppraisalFee(Long appraisalFeeId, AppraisalFeeUpdateDto updateDto) {
+        AppraisalFee appraisalFee = findById(appraisalFeeId);
+        Parties parties = partiesService.findByAppraisalAndPartiesCategory(updateDto.getAppraisalId(), updateDto.getFeePartiesCategoryId());
+        CategoryItem feeCategory = categoryItemService.findCategoryItemById(updateDto.getFeeCategoryId());
+        updateDto.setParties(parties);
+        updateDto.setFeeCategory(feeCategory);
+
+        appraisalFee.updateAppraisalFee(updateDto);
+
+        return feeRepository.save(appraisalFee);
     }
 }

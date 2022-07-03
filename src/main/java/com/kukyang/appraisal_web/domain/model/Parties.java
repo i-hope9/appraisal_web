@@ -1,7 +1,8 @@
 package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
-import com.kukyang.appraisal_web.dto.PartiesCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,5 +51,13 @@ public class Parties extends BaseTime {
                 .affiliation(partiesDto.getAffiliation())
                 .affiliationTel(partiesDto.getAffiliationTel())
                 .build();
+    }
+
+    public void updateParties(PartiesUpdateDto dto) {
+        this.partiesCategory = dto.getPartiesCategory();
+        this.name = dto.getName();
+        this.tel = dto.getTel();
+        this.affiliation = dto.getAffiliation();
+        this.affiliationTel = dto.getAffiliationTel();
     }
 }

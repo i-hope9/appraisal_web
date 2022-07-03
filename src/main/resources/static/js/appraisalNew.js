@@ -138,7 +138,7 @@ function addAppraisal() {
     data["appraisalFeeList"] = $feeTable.getData();
 
     $.ajax({
-        url: "/appraisal/info",
+        url: "/appraisal",
         type: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",

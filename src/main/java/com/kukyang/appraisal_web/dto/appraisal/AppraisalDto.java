@@ -1,8 +1,13 @@
-package com.kukyang.appraisal_web.dto;
+package com.kukyang.appraisal_web.dto.appraisal;
 
 import com.kukyang.appraisal_web.domain.model.Appraisal;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
+import com.kukyang.appraisal_web.dto.appraisalFee.AppraisalFeeDto;
+import com.kukyang.appraisal_web.dto.appraisalFee.AppraisalFeeProgressDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesDto;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
+import com.kukyang.appraisal_web.dto.appraisalProgress.AppraisalProgressDto;
+import com.kukyang.appraisal_web.dto.category.CategoryItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

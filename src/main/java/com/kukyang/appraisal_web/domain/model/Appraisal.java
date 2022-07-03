@@ -2,8 +2,8 @@ package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
-import com.kukyang.appraisal_web.dto.AppraisalUpdateDto;
+import com.kukyang.appraisal_web.dto.appraisal.AppraisalCreateDto;
+import com.kukyang.appraisal_web.dto.appraisal.AppraisalUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -102,6 +102,7 @@ public class Appraisal extends BaseTime {
         this.year = dto.getYear();
         this.appraisalNumber = dto.getAppraisalNumber();
         this.judgePanel = dto.getJudgePanel();
+        this.judgeTel = dto.getJudgeTel();
         this.judgeFax = dto.getJudgeFax();
         this.caseType = dto.getCaseType();
         this.caseNumber = dto.getCaseNumber();

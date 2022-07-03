@@ -2,7 +2,7 @@ package com.kukyang.appraisal_web.service;
 
 import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import com.kukyang.appraisal_web.dto.CategoryItemDto;
+import com.kukyang.appraisal_web.dto.category.CategoryItemDto;
 
 import javax.transaction.Transactional;
 import java.util.List;

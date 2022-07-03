@@ -3,7 +3,7 @@ package com.kukyang.appraisal_web.service.impl;
 import com.kukyang.appraisal_web.domain.model.Category;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.CategoryRepository;
-import com.kukyang.appraisal_web.dto.CategoryDto;
+import com.kukyang.appraisal_web.dto.category.CategoryDto;
 import com.kukyang.appraisal_web.service.CategoryService;
 import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;

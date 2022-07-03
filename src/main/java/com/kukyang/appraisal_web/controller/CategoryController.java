@@ -1,8 +1,8 @@
 package com.kukyang.appraisal_web.controller;
 
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import com.kukyang.appraisal_web.dto.CategoryDto;
-import com.kukyang.appraisal_web.dto.CategoryItemDto;
+import com.kukyang.appraisal_web.dto.category.CategoryDto;
+import com.kukyang.appraisal_web.dto.category.CategoryItemDto;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.CategoryService;
 import lombok.RequiredArgsConstructor;

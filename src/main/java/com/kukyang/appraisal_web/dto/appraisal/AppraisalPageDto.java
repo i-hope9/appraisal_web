@@ -1,4 +1,4 @@
-package com.kukyang.appraisal_web.dto;
+package com.kukyang.appraisal_web.dto.appraisal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

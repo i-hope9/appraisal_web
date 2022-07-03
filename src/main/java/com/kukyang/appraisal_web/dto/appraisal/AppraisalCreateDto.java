@@ -1,9 +1,14 @@
-package com.kukyang.appraisal_web.dto;
+package com.kukyang.appraisal_web.dto.appraisal;
 
 import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
+import com.kukyang.appraisal_web.dto.appraisalFee.AppraisalFeeCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesCreateDto;
+import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @SuperBuilder
 @Getter
@@ -11,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppraisalUpdateDto {
+public class AppraisalCreateDto extends BaseTimeDto {
     private Long year;
     private String appraisalNumber;
     private Long courtCategoryId;
@@ -26,6 +31,10 @@ public class AppraisalUpdateDto {
     private String objectRemarks;
     private StatusEnum status;
 
+    private List<PartiesCreateDto> partiesList;
+    private List<AppraisalFeeCreateDto> appraisalFeeList;
+
     private CategoryItem courtCategory;
     private CategoryItem appraisalCategory;
+
 }

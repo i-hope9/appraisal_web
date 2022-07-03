@@ -2,6 +2,12 @@ let deleteIcon = function (cell, formatterParams) {
     return "<i class='fas fa-trash'></i>";
 }
 
+const DATA_TYPE = {
+    INSERT: "insert",
+    UPDATE: "update"
+}
+let tempCell;
+
 let $overviewTable1 = new Tabulator("#overviewTable1", {
     data: appraisal,
     layout: "fitColumns",
@@ -194,6 +200,28 @@ $overviewTable2.on("dataChanged", function (data) {
     updateAppraisal(data);
 })
 
+$partiesTable.on("rowAdded", function (row) {
+
+})
+
+$partiesTable.on("dataChanged", function (data) {
+    console.log(data);
+    // updateParties(data);
+})
+
+$partiesTable.on("cellEdited", function (cell) {
+    console.log("$partiesTable cellEdited");
+    console.log(cell);
+    tempCell = cell;
+
+})
+
+$progressTable.on("dataChanged", function (data) {
+    if (data[0]['flag'] === undefined)
+        data[0]['flag'] = DATA_TYPE.UPDATE;
+    updateProgress(data);
+})
+
 function updateAppraisal(data) {
     data = data[0];
     let id = data['id'];
@@ -201,7 +229,7 @@ function updateAppraisal(data) {
     data['appraisalCategoryId'] = data['appraisalCategory']['id'];
 
     $.ajax({
-        url: "/appraisal/info/" + id,
+        url: "/appraisal/" + id,
         type: "PUT",
         data: JSON.stringify(data),
         contentType: "application/json",
@@ -214,6 +242,52 @@ function updateAppraisal(data) {
     })
 }
 
+function updateParties(data) {
+    data = data[0];
+    let id = data['id'];
+    data['partiesCategoryId'] = data['partiesCategory']['id'];
+
+    $.ajax({
+        url: "/appraisal/detail/parties/" + id,
+        type: "PUT",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+        }
+    })
+}
+
+function updateProgress(data) {
+    data = data[0];
+    let flag = data['flag'];
+    switch (flag) {
+        case DATA_TYPE.INSERT:
+
+            data['flag'] = DATA_TYPE.UPDATE;
+
+    }
+    // let id = data['id'] === undefined ? null : data['id'];
+    console.log(flag);
+    // data['partiesCategoryId'] = data['partiesCategory']['id'];
+    //
+    // $.ajax({
+    //     url: "/appraisal/detail/parties/" + id,
+    //     type: "PUT",
+    //     data: JSON.stringify(data),
+    //     contentType: "application/json",
+    //     success: function (data) {
+    //         console.log(data);
+    //     },
+    //     error: function (request, status, error) {
+    //         alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+    //     }
+    // })
+}
+
 function addPartiesRow() {
     $partiesTable.addRow({});
 }
@@ -223,7 +297,7 @@ function addFeeRow() {
 }
 
 function addProgressRow() {
-    $progressTable.addRow({progressCategoryId: 62, progressDate: DateTime.now().toISODate()});
+    $progressTable.addRow({progressDate: DateTime.now().toISODate(), flag: DATA_TYPE.INSERT});
 }
 
 function addFeeProgressRow() {

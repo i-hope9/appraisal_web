@@ -2,10 +2,10 @@ package com.kukyang.appraisal_web.controller;
 
 import com.google.gson.Gson;
 import com.kukyang.appraisal_web.domain.model.Appraisal;
-import com.kukyang.appraisal_web.dto.AppraisalCreateDto;
-import com.kukyang.appraisal_web.dto.AppraisalDto;
-import com.kukyang.appraisal_web.dto.AppraisalPageDto;
-import com.kukyang.appraisal_web.dto.AppraisalUpdateDto;
+import com.kukyang.appraisal_web.dto.appraisal.AppraisalCreateDto;
+import com.kukyang.appraisal_web.dto.appraisal.AppraisalDto;
+import com.kukyang.appraisal_web.dto.appraisal.AppraisalPageDto;
+import com.kukyang.appraisal_web.dto.appraisal.AppraisalUpdateDto;
 import com.kukyang.appraisal_web.service.AppraisalFeeService;
 import com.kukyang.appraisal_web.service.AppraisalService;
 import com.kukyang.appraisal_web.service.PartiesService;
@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/appraisal")
 @RequiredArgsConstructor
 public class AppraisalController {
     private final SelectOptionUtils selectOptionUtils;
@@ -45,8 +44,11 @@ public class AppraisalController {
         return "pages/appraisal/appraisalList";
     }
 
+    /**
+    * 감정관리 리스트를 불러 옵니다. (appraisalList.js)
+    * */
     @ResponseBody
-    @GetMapping("/all")
+    @GetMapping("/appraisal/all")
     public AppraisalPageDto getAppraisalPageableList(@RequestParam int page, @RequestParam int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Appraisal> appraisals = appraisalService.findAllAppraisals(pageable);
@@ -57,7 +59,10 @@ public class AppraisalController {
                 .build();
     }
 
-    @GetMapping("/info/{id}")
+    /**
+     * 감정관리 상세 정보를 불러 옵니다. (appraisalList.js)
+     * */
+    @GetMapping("/appraisal/{id}")
     public String getAppraisalById(@PathVariable Long id, Model model) {
         model.addAttribute("yearOptions", gson.toJson(selectOptionUtils.generateYearOptions()));
         model.addAttribute("courtOptions", gson.toJson(selectOptionUtils.generateCategoryMap(COURT_CATEGORY_ID)));
@@ -76,7 +81,10 @@ public class AppraisalController {
         return "pages/appraisal/appraisalInfo";
     }
 
-    @GetMapping("/info")
+    /**
+     * 감정관리 신규 추가 페이지로 이동합니다. (appraisalList.html)
+     * */
+    @GetMapping("/appraisal")
     public String getAppraisalNew(Model model) {
         model.addAttribute("yearOptions", gson.toJson(selectOptionUtils.generateYearOptions()));
         model.addAttribute("courtOptions", gson.toJson(selectOptionUtils.generateCategoryMap(COURT_CATEGORY_ID)));
@@ -87,7 +95,10 @@ public class AppraisalController {
         return "pages/appraisal/appraisalNew";
     }
 
-    @PostMapping("/info")
+    /**
+     * 신규 감정관리를 추가합니다. (appraisalNew.js)
+     * */
+    @PostMapping("/appraisal")
     public String saveAppraisal(@RequestBody AppraisalCreateDto requestDto) {
         Appraisal appraisal = appraisalService.saveAppraisal(requestDto);
         partiesService.savePartiesList(requestDto.getPartiesList(), appraisal);
@@ -96,8 +107,11 @@ public class AppraisalController {
         return "redirect:/appraisal/all?page=1";
     }
 
+    /**
+     * 감정관리를 수정합니다. (appraisalNew.js)
+     * */
     @ResponseBody
-    @PutMapping("/info/{id}")
+    @PutMapping("/appraisal/{id}")
     public AppraisalDto updateAppraisalById(@PathVariable Long id, @RequestBody AppraisalUpdateDto requestDto) {
         Appraisal appraisal = appraisalService.updateAppraisal(id, requestDto);
         return AppraisalDto.fromEntity(appraisal);

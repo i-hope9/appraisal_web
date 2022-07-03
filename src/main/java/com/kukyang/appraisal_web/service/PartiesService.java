@@ -2,7 +2,8 @@ package com.kukyang.appraisal_web.service;
 
 import com.kukyang.appraisal_web.domain.model.Appraisal;
 import com.kukyang.appraisal_web.domain.model.Parties;
-import com.kukyang.appraisal_web.dto.PartiesCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesCreateDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesUpdateDto;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -18,5 +19,12 @@ public interface PartiesService {
 
     /* Read */
     @Transactional
+    Parties findById(Long partiesId);
+
+    @Transactional
     Parties findByAppraisalAndPartiesCategory(Long appraisalId, Long partiesId);
+
+    /* Update */
+    @Transactional
+    Parties updateParties(Long partiesId, PartiesUpdateDto updateDto);
 }

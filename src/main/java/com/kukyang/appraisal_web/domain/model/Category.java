@@ -2,7 +2,7 @@ package com.kukyang.appraisal_web.domain.model;
 
 import com.kukyang.appraisal_web.domain.model.bases.BaseTime;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
-import com.kukyang.appraisal_web.dto.CategoryDto;
+import com.kukyang.appraisal_web.dto.category.CategoryDto;
 import lombok.*;
 
 import javax.persistence.*;

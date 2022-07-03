@@ -4,7 +4,7 @@ import com.kukyang.appraisal_web.domain.model.Category;
 import com.kukyang.appraisal_web.domain.model.CategoryItem;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
 import com.kukyang.appraisal_web.domain.repository.CategoryItemRepository;
-import com.kukyang.appraisal_web.dto.CategoryItemDto;
+import com.kukyang.appraisal_web.dto.category.CategoryItemDto;
 import com.kukyang.appraisal_web.service.CategoryItemService;
 import com.kukyang.appraisal_web.service.CategoryService;
 import com.kukyang.appraisal_web.service.exception.ResourceNotFoundException;

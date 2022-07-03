@@ -22,6 +22,6 @@ let $appraisalListTable = new Tabulator("#appraisalListTable", {
 
 $appraisalListTable.on("rowClick", function (e, row) {
     let data = row.getData();
-    window.location.href = "/appraisal/info/" + data.id;
+    window.location.href = "/appraisal/" + data.id;
 });
 

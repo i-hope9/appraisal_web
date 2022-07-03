@@ -1,7 +1,9 @@
-package com.kukyang.appraisal_web.dto;
+package com.kukyang.appraisal_web.dto.appraisalFee;
 
 import com.kukyang.appraisal_web.domain.model.AppraisalFee;
 import com.kukyang.appraisal_web.domain.model.enums.StatusEnum;
+import com.kukyang.appraisal_web.dto.category.CategoryItemDto;
+import com.kukyang.appraisal_web.dto.appraisalParties.PartiesDto;
 import com.kukyang.appraisal_web.dto.bases.BaseTimeDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

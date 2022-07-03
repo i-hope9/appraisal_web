@@ -1,4 +1,4 @@
-package com.kukyang.appraisal_web.dto;
+package com.kukyang.appraisal_web.dto.appraisalParties;
 
 import com.kukyang.appraisal_web.domain.model.Appraisal;
 import com.kukyang.appraisal_web.domain.model.CategoryItem;
